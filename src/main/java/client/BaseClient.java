@@ -2,17 +2,14 @@ package client;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
+import io.restassured.internal.RequestSpecificationImpl;
+import io.restassured.specification.*;
 
-public class BaseClient {
-    String BASE_URI = "petstore.swagger.io";
-    RequestSpecification reqSpec;
+public abstract class BaseClient {
+    private final String baseUrl = "https://petstore.swagger.io/v2";
 
-    public BaseClient() {
-         reqSpec = new RequestSpecBuilder()
-                .setBaseUri(BASE_URI)
-                .setContentType(ContentType.JSON)
-                .build();
-    }
-
+    protected final RequestSpecification baseRequestSpecification = new RequestSpecBuilder()
+            .setBaseUri(baseUrl)
+            .setContentType(ContentType.JSON)
+            .build();
 }
