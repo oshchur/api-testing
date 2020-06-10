@@ -1,10 +1,5 @@
 package model;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
     private int id;
     private String userName;
