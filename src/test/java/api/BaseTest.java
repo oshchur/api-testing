@@ -20,13 +20,5 @@ public class BaseTest {
 //        Assert.assertEquals(response.getStatusCode(), 200, "Error - incorrect status code");
 //    }
 
-    @Test
-    public void liubaTest(){
-        Store testObj = new Store(12, 35, 22, "2020-06-10T14:00:28.542Z", "placed", true);
-        StoreClient sC = new StoreClient();
 
-        JSONObject myObject = new JSONObject(sC.placeOrder(testObj).getBody().asString());
-        String str = testObj.toEntity(myObject).toString();
-        System.out.println(str);
-    }
 }
