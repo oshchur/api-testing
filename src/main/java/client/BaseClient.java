@@ -9,6 +9,7 @@ public abstract class BaseClient {
 
     protected final RequestSpecification baseRequestSpecification = new RequestSpecBuilder()
             .setBaseUri(baseUrl)
+            .setAccept(ContentType.JSON)
             .setContentType(ContentType.JSON)
             .build();
 }
