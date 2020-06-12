@@ -14,13 +14,11 @@ public class PetClient extends BaseClient {
     private final String petStatusUrl = petClientUrl + "/findByStatus";
     private final String deletePetUrl = petClientUrl + "/{petID}";
 
-
     public Response getPetByStatus(String status) {
-        return given()
+        return given(baseRequestSpecification)
                 .pathParam("status", status)
                 .get(petStatusUrl);
     }
-
 
     public Response getPetById(Integer id) {
         return given(baseRequestSpecification).
@@ -34,14 +32,10 @@ public class PetClient extends BaseClient {
                 delete(deletePetUrl);
     }
 
-    public Response createPet(List<Pet> pets) {
-        JSONArray requestParams = new JSONArray();
-        for (Pet pet : pets) {
-            requestParams.put(pet.getJson(pet));
-        }
-        return given(baseRequestSpecification).body(requestParams.toString()).post(petClientUrl);
+    public Response createPet(Pet pets) {
+        return given(baseRequestSpecification)
+                .body(pets)
+                .post(petClientUrl);
     }
-
-
 }
 

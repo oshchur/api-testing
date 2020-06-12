@@ -18,19 +18,15 @@ public class UserClient extends BaseClient {
     private final String logoutUrl = userUrl + "/logout";
 
     public Response createUsersWithList(final List<User> users) {
-        final JSONArray requestParams = new JSONArray();
-        for (final User user : users) {
-            requestParams.put(user.getJson());
-        }
-
         return given(baseRequestSpecification)
-                .body(requestParams.toString())
+                .body(users)
                 .post(createWithUserListUrl);
     }
 
     public Response getUserByUserName(final String username) {
         return given(baseRequestSpecification)
-                .get(getByUsernameUrl, username);
+                .pathParam("username", username)
+                .get(getByUsernameUrl);
     }
 
     public Response updateUserByUsername(final String username, final User user) {
@@ -61,23 +57,20 @@ public class UserClient extends BaseClient {
     }
 
     public Response login(String name, String password) {
-        Response response = given(baseRequestSpecification).queryParam("name", name, "password", password).get(loginUrl);
-        System.out.println(response.asString());
-        return response;
+        return given(baseRequestSpecification)
+                .queryParam("name", name, "password", password)
+                .get(loginUrl);
     }
 
     public Response logout() {
-        return given(baseRequestSpecification).get(logoutUrl);
+        return given(baseRequestSpecification)
+                .get(logoutUrl);
     }
 
     public Response create(User user) {
-        return given(baseRequestSpecification).request().body(user.getJson())
+        return given(baseRequestSpecification)
+                .body(user)
                 .post(userUrl);
     }
 
-    public Response create(int id, String userName, String firstName, String lastName, String email, String password, String phone, int userStatus) {
-        return given(baseRequestSpecification)
-                .body(new User(id, userName, firstName, lastName, email, password, phone, userStatus).getJson())
-                .post(userUrl);
-    }
 }

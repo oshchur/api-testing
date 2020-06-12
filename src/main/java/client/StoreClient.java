@@ -2,21 +2,18 @@ package client;
 
 import io.restassured.response.Response;
 import model.Store;
-import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.post;
-
 
 public class StoreClient extends BaseClient {
     private final String storeBasePath = "/store";
     private final String orderPath = storeBasePath + "/order";
     private final String orderByIdPath = orderPath + "/{orderId}";
-    private final String inventoryPath = storeBasePath +"/inventory";
+    private final String inventoryPath = storeBasePath + "/inventory";
 
     public Response placeOrder(Store store) {
         return given(baseRequestSpecification)
-                            .body(store.toJson())
+                .body(store)
                 .post(orderPath);
     }
 
@@ -36,5 +33,4 @@ public class StoreClient extends BaseClient {
         return given(baseRequestSpecification)
                 .get(inventoryPath);
     }
-
 }
