@@ -11,7 +11,6 @@ import static io.restassured.RestAssured.post;
 public class StoreClient extends BaseClient {
     private final String storeBasePath = "/store";
     private final String orderPath = storeBasePath + "/order";
-    //private final String orderByIdPath = orderPath;
     private final String orderByIdPath = orderPath + "/{orderId}";
     private final String inventoryPath = storeBasePath +"/inventory";
 
