@@ -1,9 +1,9 @@
 package client;
 
 import com.github.javafaker.Faker;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.User;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +17,23 @@ public class UserClient extends BaseClient {
     private final String loginUrl = userUrl + "/login";
     private final String logoutUrl = userUrl + "/logout";
 
-    public Response createUsersWithList(final List<User> users) {
-        return given(baseRequestSpecification)
+    public Response createWithList(final List<User> users) {
+        return given(baseRequestSpecification(ContentType.JSON))
                 .body(users)
                 .post(createWithUserListUrl);
     }
 
     public Response getUserByUserName(final String username) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .pathParam("username", username)
                 .get(getByUsernameUrl);
     }
 
-    public Response updateUserByUsername(final String username, final User user) {
-        return given(baseRequestSpecification)
-                .body(user.getJson().toString())
-                .put(getByUsernameUrl, username);
+    public Response updateByUsername(final String username, final User user) {
+        return given(baseRequestSpecification(ContentType.JSON))
+                .body(user)
+                .pathParam("username", username)
+                .put(getByUsernameUrl);
     }
 
     public List<User> createRandomUsers() {
@@ -57,18 +58,18 @@ public class UserClient extends BaseClient {
     }
 
     public Response login(String name, String password) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .queryParam("name", name, "password", password)
                 .get(loginUrl);
     }
 
     public Response logout() {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .get(logoutUrl);
     }
 
     public Response create(User user) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .body(user)
                 .post(userUrl);
     }
