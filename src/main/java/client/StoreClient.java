@@ -9,26 +9,28 @@ import static io.restassured.RestAssured.post;
 
 
 public class StoreClient extends BaseClient {
-    private final String orderPath = "/store/order";
-    private final String orderByIdPath = "/store/order/";
-    private final String inventoryPath = "/store/inventory";
+    private final String storeBasePath = "/store";
+    private final String orderPath = storeBasePath + "/order";
+    //private final String orderByIdPath = orderPath;
+    private final String orderByIdPath = orderPath + "/{orderId}";
+    private final String inventoryPath = storeBasePath +"/inventory";
 
     public Response placeOrder(Store store) {
         return given(baseRequestSpecification)
-                .body(store.toJson())
+                            .body(store.toJson())
                 .post(orderPath);
     }
 
     public Response getOrderById(String id) {
         return given(baseRequestSpecification)
-                .queryParam("orderId", id)
-                .get(orderByIdPath + id);
+                .pathParam("orderId", id)
+                .get(orderByIdPath);
     }
 
     public Response deleteOrderById(String id) {
         return given(baseRequestSpecification)
-                .queryParam("orderId", id)
-                .delete(orderByIdPath + id);
+                .pathParam("orderId", id)
+                .delete(orderByIdPath);
     }
 
     public Response getInventory() {
