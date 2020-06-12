@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class UserClientTest {
+    private User user = new User();
     @Test
     public void login() {
         Assert.assertEquals(new UserClient().login("Nikita", "0089711").statusCode(), 200);
