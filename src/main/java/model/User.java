@@ -1,9 +1,12 @@
 package model;
 
-import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
+import org.json.simple.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private int id;
@@ -14,6 +17,18 @@ public class User {
     private String password;
     private String phone;
     private int userStatus;
+
+    public User(int id, String userName, String firstName, String lastName, String email, String password, String phone, int userStatus) {
+        this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.userStatus = userStatus;
+    }
+    public User(){};
 
     public int getId() {
         return id;
@@ -92,4 +107,19 @@ public class User {
                 ", User Status=" + userStatus +
                 '}';
     }
+
+    protected JSONObject jesika = new JSONObject();
+    public String getJsonStr() {
+        jesika.put("id", id);
+        jesika.put("userName", userName);
+        jesika.put("firstName", firstName);
+        jesika.put("lastName", lastName);
+        jesika.put("email", email);
+        jesika.put("password", password);
+        jesika.put("phone",phone);
+        jesika.put("userStatus", userStatus);
+        return jesika.toJSONString();
+    }
+
+
 }
