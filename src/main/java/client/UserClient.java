@@ -74,4 +74,33 @@ public class UserClient extends BaseClient {
 
         return users;
     }
+
+    private final String login = "/user/login";
+
+    public Response login(String name, String password) {
+        Response response = given(baseRequestSpecification).queryParam("name", name, "password", password).get(login);
+        System.out.println(response.asString());
+        return response;
+    }
+
+    private final String logout = "/user/logout";
+    public Response logout() {
+        return given(baseRequestSpecification).get(logout);
+    }
+
+    public Response create(int id, String str, String str2, String str3, String str4, String str5, String str6, int status) {
+//        return given(baseRequestSpecification).queryParam(new User(id, str, str2, str3, str4, str5, str6, status).getJsonStr())
+//                .post("/user");
+
+//        return given(baseRequestSpecification).queryParam(new User(id, str, str2, str3, str4, str5, str6, status).toString())
+//                .post("/user");
+
+
+          return given(baseRequestSpecification).request().body(new User(id, str, str2, str3, str4, str5, str6, status).getJsonStr())
+                  .post("/user");
+
+
+//        return given(baseRequestSpecification).request().body(new User(id, str, str2, str3, str4, str5, str6, status).toString())
+//                .post("/user");
+    }
 }
