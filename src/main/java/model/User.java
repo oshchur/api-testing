@@ -1,13 +1,6 @@
 package model;
 
 
-
-
-import org.json.simple.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class User {
     private int id;
     private String userName;
@@ -17,6 +10,10 @@ public class User {
     private String password;
     private String phone;
     private int userStatus;
+
+    public User() {
+        
+    }
 
     public User(int id, String userName, String firstName, String lastName, String email, String password, String phone, int userStatus) {
         this.id = id;
@@ -28,7 +25,6 @@ public class User {
         this.phone = phone;
         this.userStatus = userStatus;
     }
-    public User(){};
 
     public int getId() {
         return id;
@@ -107,20 +103,4 @@ public class User {
                 ", User Status=" + userStatus +
                 '}';
     }
-
-    protected JSONObject jesika = new JSONObject();
-
-    public JSONObject getJson() {
-        jesika.put("id", id);
-        jesika.put("userName", userName);
-        jesika.put("firstName", firstName);
-        jesika.put("lastName", lastName);
-        jesika.put("email", email);
-        jesika.put("password", password);
-        jesika.put("phone",phone);
-        jesika.put("userStatus", userStatus);
-        return jesika;
-    }
-
-
 }
