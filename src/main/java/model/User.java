@@ -109,7 +109,8 @@ public class User {
     }
 
     protected JSONObject jesika = new JSONObject();
-    public String getJsonStr() {
+
+    public JSONObject getJson() {
         jesika.put("id", id);
         jesika.put("userName", userName);
         jesika.put("firstName", firstName);
@@ -118,7 +119,7 @@ public class User {
         jesika.put("password", password);
         jesika.put("phone",phone);
         jesika.put("userStatus", userStatus);
-        return jesika.toJSONString();
+        return jesika;
     }
 
 
