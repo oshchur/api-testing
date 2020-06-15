@@ -1,22 +1,40 @@
 package api;
 
 import assertion.BaseAssertion;
+import builders.UserBuilderImpl;
+import builders.UserDirector;
 import client.UserClient;
 import io.restassured.response.Response;
 import model.User;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
 public class UserClientTest {
-    //        TODO make by pattern builder
-    final UserClient userClient = new UserClient();
-    final List<User> randomUsers = userClient.createRandomUsers();
+    UserClient userClient;
+    UserBuilderImpl userBuilderImpl;
+    UserDirector userDirector;
+
+    @BeforeClass
+    public void beforeClass() {
+        userClient = new UserClient();
+        userBuilderImpl = new UserBuilderImpl();
+        userDirector = new UserDirector();
+
+        userDirector.constructRandomUser(userBuilderImpl);
+    }
 
     @Test
     public void createWithList() {
-        Response response = userClient.createWithList(randomUsers);
+        Response response = userClient.createWithList(userBuilderImpl.getListResult(3));
+        response.getBody().prettyPrint();
+
+        BaseAssertion.checkResponse(response);
+    }
+
+    @Test
+    public void getUserByUsername() {
+        Response response = userClient.getUserByUserName("Taras");
         response.getBody().prettyPrint();
 
         BaseAssertion.checkResponse(response);
@@ -24,7 +42,7 @@ public class UserClientTest {
 
     @Test
     public void updateByUsername() {
-        Response response = userClient.updateByUsername("Taras", randomUsers.get(1));
+        Response response = userClient.updateByUsername("Taras", userBuilderImpl.getResult());
         response.getBody().prettyPrint();
 
         BaseAssertion.checkResponse(response);
@@ -47,6 +65,13 @@ public class UserClientTest {
 //        System.out.println(new User(12, "q","w","e","r","r","b", 34).getJsonStr());
 //        System.out.println(new User(12, "q","w","e","r","r","b", 34).toString());
         Response response = new UserClient().create(new User(12, "q", "w", "e", "r", "r", "b", 34));
+        Assert.assertEquals(response.statusCode(), 200);
+    }
+
+    @Test
+    public void delete() {
+        UserClient user = new UserClient();
+        Response response = user.delete("Nikita");
         Assert.assertEquals(response.statusCode(), 200);
     }
 
