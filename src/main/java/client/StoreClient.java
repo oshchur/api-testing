@@ -2,10 +2,8 @@ package client;
 
 import io.restassured.response.Response;
 import model.Store;
-import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.post;
 
 
 public class StoreClient extends BaseClient {
@@ -16,7 +14,7 @@ public class StoreClient extends BaseClient {
 
     public Response placeOrder(Store store) {
         return given(baseRequestSpecification)
-                            .body(store.toJson())
+                            .body(store)
                 .post(orderPath);
     }
 

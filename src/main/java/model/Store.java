@@ -2,20 +2,20 @@ package model;
 
 
 import com.google.gson.Gson;
-import io.restassured.response.Response;
 import org.json.JSONObject;
 
 public class Store {
 
-    private String id;
-    private String petId;
-    private String quantity;
-    private String shipDate;
-    private String status;
-    private boolean complete;
-    private Store storeObj;
+    public String id;
+    public String petId;
+    public String quantity;
+    public String shipDate;
+    public String status;
+    public String complete;
 
-    public Store(String id, String petId, String quantity, String shipDate, String status, boolean complete) {
+    public Store storeObj;
+
+    public Store(String id, String petId, String quantity, String shipDate, String status, String complete) {
         this.id = id;
         this.petId = petId;
         this.quantity = quantity;
@@ -50,7 +50,7 @@ public class Store {
         return status;
     }
 
-    public boolean getComplete() {
+    public String getComplete() {
         return complete;
     }
 
@@ -76,7 +76,7 @@ public class Store {
         this.status = status;
     }
 
-    public void setComplete(boolean complete) {
+    public void setComplete(String complete) {
         this.complete = complete;
     }
 
@@ -90,19 +90,6 @@ public class Store {
                 "status=" + status + ",\n" +
                 "complete=" + complete + "\n" +
                 '}';
-    }
-
-    public JSONObject toJson() {
-        JSONObject object = new JSONObject();
-
-        object.put("id", this.getId());
-        object.put("petId", this.getPetId());
-        object.put("quantity", this.getQuantity());
-        object.put("shipDate", this.getShipDate());
-        object.put("status", this.getStatus());
-        object.put("complete", this.getComplete());
-
-        return object;
     }
 
     public Store toEntity(JSONObject jsObj) {
