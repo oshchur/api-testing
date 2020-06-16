@@ -20,17 +20,4 @@ public class UserDirector {
         builder.setPhone(faker.phoneNumber().cellPhone());
         builder.setUserStatus(faker.number().numberBetween(0, 10));
     }
-
-    public List<User> createRandomUsers(final int quantity) {
-        final UserBuilderImpl userBuilderImpl = new UserBuilderImpl();
-        final List<User> users = new ArrayList<>();
-        for (int i = 0; i < quantity; i++) {
-            constructRandomUser(userBuilderImpl);
-            User result = userBuilderImpl.getResult();
-
-            users.add(result);
-        }
-
-        return users;
-    }
 }
