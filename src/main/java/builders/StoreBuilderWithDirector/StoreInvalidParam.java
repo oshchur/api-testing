@@ -1,4 +1,6 @@
-package builders;
+package builders.StoreBuilderWithDirector;
+
+import builders.StoreBuilderWithDirector.StoreBuilder;
 
 public class StoreInvalidParam extends StoreBuilder {
     @Override

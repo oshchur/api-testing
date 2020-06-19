@@ -1,61 +1,39 @@
 package client;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.Pet;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 public class PetClient extends BaseClient {
-    private final String petClientPath = "/pet";
-    private final String petIdPath = "​/pet​/{petId}";
-    private final String petStatusPath = "/pet/findByStatus";
-    private final String deletePetPath = "/pet/{petID}";
-
+    private final String petClientUrl = "/pet";
+    private final String petIdUrl = petClientUrl + "​/{petId}";
+    private final String petStatusUrl = petClientUrl + "/findByStatus";
+    private final String deletePetUrl = petClientUrl + "/{petID}";
 
     public Response getPetByStatus(String status) {
-        return given()
-                .queryParam("status", status)
-                .get(petStatusPath);
+        return given(baseRequestSpecification(ContentType.JSON))
+                .pathParam("status", status)
+                .get(petStatusUrl);
     }
 
-
     public Response getPetById(Integer id) {
-        return given(baseRequestSpecification).
-                queryParam("petId", id).
-                get(petIdPath);
+        return given(baseRequestSpecification(ContentType.JSON)).
+                pathParam("petId", id).
+                get(petIdUrl);
     }
 
     public Response deletePetById(Integer id) {
-        return given(baseRequestSpecification).
-                queryParam("petId", id).
-                delete(deletePetPath);
+        return given(baseRequestSpecification(ContentType.JSON)).
+                pathParam("petId", id).
+                delete(deletePetUrl);
     }
 
-    public Response createPet(List<Pet> pets) {
-        JSONArray requestParams = new JSONArray();
-        for (Pet pet : pets) {
-            requestParams.put(petToJson(pet));
-        }
-        return given(baseRequestSpecification).body(requestParams.toString()).post(petClientPath);
+    public Response createPet(Pet pets) {
+        return given(baseRequestSpecification(ContentType.JSON))
+                .body(pets)
+                .post(petClientUrl);
     }
-
-
-
-    private JSONObject petToJson(Pet pet) {
-        JSONObject object = new JSONObject();
-        object.put("id", pet.getId());
-        object.put("category", pet.getCategory());
-        object.put("name", pet.getName());
-        object.put("photoUrls", pet.getPhotoUrls());
-        object.put("tags", pet.getTags());
-        object.put("status", pet.getStatus());
-        return object;
-    }
-
-
 }
 

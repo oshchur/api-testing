@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class Pet {
@@ -78,6 +80,17 @@ public class Pet {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public JSONObject getJson(Pet pet) {
+        JSONObject object = new JSONObject();
+        object.put("id", pet.getId());
+        object.put("category", pet.getCategory());
+        object.put("name", pet.getName());
+        object.put("photoUrls", pet.getPhotoUrls());
+        object.put("tags", pet.getTags());
+        object.put("status", pet.getStatus());
+        return object;
     }
 
     @Override

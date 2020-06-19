@@ -1,8 +1,8 @@
 package api;
 
-import builders.StoreDirector;
-import builders.StoreInvalidParam;
-import builders.StoreValidParam;
+import builders.StoreBuilderWithDirector.StoreDirector;
+import builders.StoreBuilderWithDirector.StoreInvalidParam;
+import builders.StoreBuilderWithDirector.StoreValidParam;
 import client.StoreClient;
 import model.Store;
 import org.json.JSONObject;
