@@ -1,5 +1,6 @@
 package api;
 
+import builders.StoreBuilder;
 import builders.StoreBuilderWithDirector.StoreDirector;
 import builders.StoreBuilderWithDirector.StoreInvalidParam;
 import builders.StoreBuilderWithDirector.StoreValidParam;
@@ -9,6 +10,20 @@ import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 public class StoreTests {
+
+
+    @Test
+    public void simplifiedBuilderTest() {
+        StoreBuilder builder = new StoreBuilder();
+        builder.setId("5")
+                .setPetId("55")
+                .setQuantity("1")
+                .setShipDate("06/07/2020")
+                .setStatus("av")
+                .setComplete("false")
+                .build();
+    System.out.println(builder.build().toString());
+    }
 
     @Test
     public void validBuilderTest() {

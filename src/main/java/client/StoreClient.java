@@ -1,5 +1,6 @@
 package client;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.Store;
 
@@ -13,25 +14,25 @@ public class StoreClient extends BaseClient {
     private final String inventoryPath = storeBasePath +"/inventory";
 
     public Response placeOrder(Store store) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                             .body(store)
                 .post(orderPath);
     }
 
     public Response getOrderById(String id) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .pathParam("orderId", id)
                 .get(orderByIdPath);
     }
 
     public Response deleteOrderById(String id) {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .pathParam("orderId", id)
                 .delete(orderByIdPath);
     }
 
     public Response getInventory() {
-        return given(baseRequestSpecification)
+        return given(baseRequestSpecification(ContentType.JSON))
                 .get(inventoryPath);
     }
 
