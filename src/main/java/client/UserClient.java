@@ -14,7 +14,7 @@ public class UserClient extends BaseClient {
     private final String getByUsernameUrl = userUrl + "/{username}";
     private final String loginUrl = userUrl + "/login";
     private final String logoutUrl = userUrl + "/logout";
-    private final String deleteUrl = userUrl;
+    private final String deleteUrl = userUrl + "/";
 
     public Response createWithList(final List<User> users) {
         return given(baseRequestSpecification(ContentType.JSON))
@@ -54,7 +54,7 @@ public class UserClient extends BaseClient {
 
     public Response delete(String name) {
         return given(baseRequestSpecification(ContentType.JSON))
-                .queryParam("username", name).delete(deleteUrl);
+                .delete(deleteUrl + name);
     }
 
 }

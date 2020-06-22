@@ -6,15 +6,16 @@ import model.Store;
 
 import static io.restassured.RestAssured.given;
 
+
 public class StoreClient extends BaseClient {
     private final String storeBasePath = "/store";
     private final String orderPath = storeBasePath + "/order";
     private final String orderByIdPath = orderPath + "/{orderId}";
-    private final String inventoryPath = storeBasePath + "/inventory";
+    private final String inventoryPath = storeBasePath +"/inventory";
 
     public Response placeOrder(Store store) {
         return given(baseRequestSpecification(ContentType.JSON))
-                .body(store)
+                            .body(store)
                 .post(orderPath);
     }
 
@@ -34,4 +35,5 @@ public class StoreClient extends BaseClient {
         return given(baseRequestSpecification(ContentType.JSON))
                 .get(inventoryPath);
     }
+
 }
