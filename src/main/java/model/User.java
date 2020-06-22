@@ -3,7 +3,7 @@ package model;
 
 public class User {
     private int id;
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,12 +19,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -77,16 +77,16 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "Id=" + id +
-                ", User Name='" + userName + '\'' +
-                ", First Name='" + firstName + '\'' +
-                ", Last Name='" + lastName + '\'' +
-                ", Email='" + email + '\'' +
-                ", Password='" + password + '\'' +
-                ", Phone='" + phone + '\'' +
-                ", User Status=" + userStatus +
-                '}';
+        return "User {" + "\n" +
+                "Id=" + id + "\n" +
+                "Username='" + username + '\'' + "\n" +
+                "Firstname='" + firstName + '\'' + "\n" +
+                "Lastname='" + lastName + '\'' + "\n" +
+                "Email='" + email + '\'' + "\n" +
+                "Password='" + password + '\'' + "\n" +
+                "Phone='" + phone + '\'' + "\n" +
+                "UserStatus=" + userStatus + "\n" +
+                " }";
     }
 }
 
