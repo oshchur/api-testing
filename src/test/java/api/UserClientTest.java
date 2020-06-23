@@ -78,11 +78,17 @@ public class UserClientTest {
     }
 
 
+    @Test
+    public void create() {
+        Response response = userClient.create(new UserBuilder().setId(1994).setUserName("Nik").build());
+        System.out.println(response.jsonPath().prettyPrint());
+        Assert.assertEquals(response.statusCode(), 200);
+    }
+
 //    @Test
-//    public void create() {
-////        System.out.println(new User(12, "q","w","e","r","r","b", 34).getJsonStr());
-////        System.out.println(new User(12, "q","w","e","r","r","b", 34).toString());
-//        Response response = new UserClient().create(new User(12, "q", "w", "e", "r", "r", "b", 34));
+//    public void delete() {
+//        UserClient user = new UserClient();
+//        Response response = user.delete("Nik");
 //        Assert.assertEquals(response.statusCode(), 200);
 //    }
 
