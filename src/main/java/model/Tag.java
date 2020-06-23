@@ -1,20 +1,20 @@
 package model;
 
 public class Tag {
-    private Integer id;
+    private String id;
     private String name;
 
     public Tag() {
     }
 
 
-    public Tag(Integer id, String name) {
+    public Tag(String id, String name) {
         super();
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -22,7 +22,7 @@ public class Tag {
         return name;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

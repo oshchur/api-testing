@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Pet {
 
-    private Integer id;
+    private String id;
     private Category category;
     private String name;
     private List<String> photoUrls = null;
@@ -18,7 +18,7 @@ public class Pet {
     }
 
 
-    public Pet(Integer id, Category category, String name, List<String> photoUrls, List<Tag> tags, String status) {
+    public Pet(String id, Category category, String name, List<String> photoUrls, List<Tag> tags, String status) {
         super();
         this.id = id;
         this.category = category;
@@ -29,29 +29,16 @@ public class Pet {
     }
 
     //Getters
-    public Integer getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Category getCategory() {
         return category;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getPhotoUrls() {
-        return photoUrls;
-    }
-
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     //Setters
@@ -59,24 +46,33 @@ public class Pet {
         this.category = category;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public List<String> getPhotoUrls() {
+        return photoUrls;
+    }
 
     public void setPhotoUrls(List<String> photoUrls) {
         this.photoUrls = photoUrls;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public List<Tag> getTags() {
+        return tags;
     }
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
     public void setStatus(String status) {
         this.status = status;
