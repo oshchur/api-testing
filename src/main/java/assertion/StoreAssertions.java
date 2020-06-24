@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import model.APIResponse;
 import model.Store;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class StoreAssertions {
 
@@ -11,23 +12,22 @@ public class StoreAssertions {
         Assert.assertTrue(response.getStatusCode() == 200);
     }
 
-    public static void assertServerError(Response response){
-        Assert.assertTrue(response.getStatusCode() == 500);
-
-        APIResponse apiResp = response.getBody().as(APIResponse.class);
+    public static void assertServerError(APIResponse apiResp){
         Assert.assertEquals(apiResp.getMessage(), "something bad happened");
         Assert.assertEquals(apiResp.getType(), "unknown");
     }
 
-    public static void assertPropertiesSet(Response response, Store store){
-        Store apiResp = response.getBody().as(Store.class);
-        Assert.assertEquals(apiResp.getId(), store.getId());
-        Assert.assertEquals(apiResp.getPetId(), store.getPetId());
-        Assert.assertEquals(apiResp.getQuantity(), store.getQuantity());
-        Assert.assertEquals(apiResp.getShipDate(), store.getShipDate());
-        Assert.assertEquals(apiResp.getStatus(), store.getStatus());
-        Assert.assertEquals(apiResp.getComplete(), store.getComplete());
+    public static void assertPropertiesSet(Store apiResp, Store store){
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(apiResp.getId(), store.getId());
+        softAssert.assertEquals(apiResp.getPetId(), store.getPetId());
+        softAssert.assertEquals(apiResp.getQuantity(), store.getQuantity());
+        softAssert.assertEquals(apiResp.getShipDate(), store.getShipDate());
+        softAssert.assertEquals(apiResp.getStatus(), store.getStatus());
+        softAssert.assertEquals(apiResp.getComplete(), store.getComplete());
+        softAssert.assertAll();
 
     }
+
 
 }
