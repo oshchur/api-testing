@@ -1,11 +1,14 @@
 package api;
 
 import assertion.BaseAssertion;
+import assertion.UserAssertion;
 import builders.UserBuilder;
 import client.UserClient;
 import io.restassured.response.Response;
+import model.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class UserClientTest {
@@ -27,19 +30,40 @@ public class UserClientTest {
     }
 
     @Test
-    public void getUserByUsername() {
-        Response response = userClient.getUserByUserName("Taras");
-        response.getBody().prettyPrint();
+    public void getUserByValidUsername() {
+        final Response response = userClient.getUserByUserName("Malina");
+        final User user = response.as(User.class);
 
-        BaseAssertion.checkResponse(response);
+        UserAssertion.checkValidUser(response, user);
+    }
+
+    @DataProvider
+    private Object[] getInvalidUsernames() {
+        return new Object[]{"Tarantino", "5656", " ", ""};
+    }
+
+    @Test(dataProvider = "getInvalidUsernames")
+    public void getUserByInvalidUsername(final String username) {
+        final Response response = userClient.getUserByUserName(username);
+        final User user = response.as(User.class);
+
+        UserAssertion.checkInvalidUser(response, user);
     }
 
     @Test
-    public void updateByUsername() {
-        Response response = userClient.updateByUsername("Taras", userBuilder.constructRandomUser());
-        response.getBody().prettyPrint();
+    public void updateByInvalidUsername() {
+        final User user = userBuilder
+                .setUserName("Malina")
+                .setFirstName("Taras")
+                .setLastName("Malinovich")
+                .setEmail("tarasmalynovskyy@gmail.com")
+                .setPassword("!Qwerty123")
+                .setPhone("+3806333333")
+                .build();
 
-        BaseAssertion.checkResponse(response);
+        final Response response = userClient.updateByUsername("Orevo", user);
+
+        BaseAssertion.checkNegativeResponse(response);
     }
 
     @Test
@@ -54,11 +78,17 @@ public class UserClientTest {
     }
 
 
+    @Test
+    public void create() {
+        Response response = userClient.create(new UserBuilder().setId(1994).setUserName("Nik").build());
+        System.out.println(response.jsonPath().prettyPrint());
+        Assert.assertEquals(response.statusCode(), 200);
+    }
+
 //    @Test
-//    public void create() {
-////        System.out.println(new User(12, "q","w","e","r","r","b", 34).getJsonStr());
-////        System.out.println(new User(12, "q","w","e","r","r","b", 34).toString());
-//        Response response = new UserClient().create(new User(12, "q", "w", "e", "r", "r", "b", 34));
+//    public void delete() {
+//        UserClient user = new UserClient();
+//        Response response = user.delete("Nik");
 //        Assert.assertEquals(response.statusCode(), 200);
 //    }
 

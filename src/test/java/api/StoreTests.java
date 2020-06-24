@@ -10,8 +10,6 @@ import org.json.JSONObject;
 import org.testng.annotations.Test;
 
 public class StoreTests {
-
-
     @Test
     public void simplifiedBuilderTest() {
         StoreBuilder builder = new StoreBuilder();
@@ -22,7 +20,7 @@ public class StoreTests {
                 .setStatus("av")
                 .setComplete("false")
                 .build();
-    System.out.println(builder.build().toString());
+        System.out.println(builder.build().toString());
     }
 
     @Test

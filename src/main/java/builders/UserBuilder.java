@@ -66,7 +66,7 @@ public class UserBuilder {
     public User build() {
         User user = new User();
         user.setId(id);
-        user.setUserName(userName);
+        user.setUsername(userName);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

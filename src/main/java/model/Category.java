@@ -1,7 +1,7 @@
 package model;
 
 public class Category {
-    private Integer id;
+    private String id;
     private String name;
 
 
@@ -9,13 +9,13 @@ public class Category {
     }
 
 
-    public Category(Integer id, String name) {
+    public Category(String id, String name) {
         super();
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -23,7 +23,7 @@ public class Category {
         return name;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
