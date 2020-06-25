@@ -12,22 +12,23 @@ public class PetClient extends BaseClient {
     private final String petStatusUrl = petClientUrl + "/findByStatus";
     private final String deletePetUrl = petClientUrl + "/{petID}";
 
+
     public Response getPetByStatus(String status) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .pathParam("status", status)
                 .get(petStatusUrl);
     }
 
-    public Response getPetById(Integer id) {
-        return given(baseRequestSpecification(ContentType.JSON)).
-                pathParam("petId", id).
-                get(petIdUrl);
+    public Response getPetById(String id) {
+        return given(baseRequestSpecification(ContentType.JSON))
+                .pathParam("petId", id)
+                .get(petIdUrl);
     }
 
-    public Response deletePetById(Integer id) {
-        return given(baseRequestSpecification(ContentType.JSON)).
-                pathParam("petId", id).
-                delete(deletePetUrl);
+    public Response deletePetById(String id) {
+        return given(baseRequestSpecification(ContentType.JSON))
+                .pathParam("petId", id)
+                .delete(deletePetUrl);
     }
 
     public Response createPet(Pet pets) {
@@ -35,5 +36,12 @@ public class PetClient extends BaseClient {
                 .body(pets)
                 .post(petClientUrl);
     }
+
+    public Response updatePet(Pet pets) {
+        return given(baseRequestSpecification(ContentType.JSON))
+                .body(pets)
+                .post(petClientUrl);
+    }
+
 }
 
