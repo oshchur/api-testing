@@ -9,52 +9,45 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 public class UserClient extends BaseClient {
-    private final String userUrl = "/user";
-    private final String createWithUserListUrl = userUrl + "/createWithList";
-    private final String getByUsernameUrl = userUrl + "/{username}";
-    private final String loginUrl = userUrl + "/login";
-    private final String logoutUrl = userUrl + "/logout";
-    private final String deleteUrl = userUrl + "/";
+    private static final String USER_URL = "/user";
+    private static final String CREATE_WITH_USER_LIST_URL = USER_URL + "/createWithList";
+    private static final String GET_BY_USERNAME_URL = USER_URL + "/{username}";
+    private static final String LOGIN_URL = USER_URL + "/login";
+    private static final String LOGOUT_URL = USER_URL + "/logout";
 
     public Response createWithList(final List<User> users) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .body(users)
-                .post(createWithUserListUrl);
+                .post(CREATE_WITH_USER_LIST_URL);
     }
 
-    public Response getUserByUserName(final String username) {
+    public Response getUserByUsername(final String username) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .pathParam("username", username)
-                .get(getByUsernameUrl);
+                .get(GET_BY_USERNAME_URL);
     }
 
     public Response updateByUsername(final String username, final User user) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .body(user)
                 .pathParam("username", username)
-                .put(getByUsernameUrl);
+                .put(GET_BY_USERNAME_URL);
     }
 
     public Response login(String name, String password) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .queryParam("name", name, "password", password)
-                .get(loginUrl);
+                .get(LOGIN_URL);
     }
 
     public Response logout() {
         return given(baseRequestSpecification(ContentType.JSON))
-                .get(logoutUrl);
+                .get(LOGOUT_URL);
     }
 
     public Response create(User user) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .body(user)
-                .post(userUrl);
+                .post(USER_URL);
     }
-
-    public Response delete(String name) {
-        return given(baseRequestSpecification(ContentType.JSON))
-                .delete(deleteUrl + name);
-    }
-
 }

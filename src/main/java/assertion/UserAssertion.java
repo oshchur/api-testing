@@ -1,6 +1,5 @@
 package assertion;
 
-import io.restassured.response.Response;
 import model.User;
 import org.testng.asserts.SoftAssert;
 
@@ -10,19 +9,23 @@ public class UserAssertion {
 
     }
 
-    public static void checkValidUser(final Response response, final User user) {
+    public static void checkValidUser(final User user) {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 200, "Error - incorrect status code");
-        softAssert.assertEquals(response.contentType(), "application/json", "Error - incorrect content type");
         softAssert.assertEquals(user.getUsername(), "Malina", "Error - incorrect username");
+        softAssert.assertEquals(user.getFirstName(), "Taras", "Error - incorrect first name");
+        softAssert.assertEquals(user.getLastName(), "Malinovich", "Error - incorrect last name");
+        softAssert.assertEquals(user.getEmail(), "tarasmalynovskyy@gmail.com", "Error - incorrect email");
+        softAssert.assertEquals(user.getPhone(), "+3806333333", "Error - incorrect phone");
         softAssert.assertAll();
     }
 
-    public static void checkInvalidUser(final Response response, final User user) {
+    public static void checkInvalidUser(final User user) {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 404, "Error - incorrect status code");
-        softAssert.assertEquals(response.contentType(), "application/json", "Error - incorrect content type");
         softAssert.assertEquals(user.getUsername(), null, "Error - incorrect username");
+        softAssert.assertEquals(user.getFirstName(), null, "Error - incorrect first name");
+        softAssert.assertEquals(user.getLastName(), null, "Error - incorrect last name");
+        softAssert.assertEquals(user.getEmail(), null, "Error - incorrect email");
+        softAssert.assertEquals(user.getPhone(), null, "Error - incorrect phone");
         softAssert.assertAll();
     }
 }
