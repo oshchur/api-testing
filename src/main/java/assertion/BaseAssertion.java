@@ -9,16 +9,9 @@ public class BaseAssertion {
 
     }
 
-    public static void checkResponse(final Response response) {
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 200, "Error - incorrect status code");
-        softAssert.assertEquals(response.contentType(), "application/json");
-        softAssert.assertAll();
-    }
-
-    public static void checkNegativeResponse(final Response response) {
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 404, "Error - incorrect status code");
+    public static void checkResponse(final Response response, final int statusCode) {
+        final SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(response.statusCode(), statusCode, "Error - incorrect status code");
         softAssert.assertEquals(response.contentType(), "application/json");
         softAssert.assertAll();
     }
