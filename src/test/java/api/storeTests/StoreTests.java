@@ -1,4 +1,4 @@
-package api;
+package api.storeTests;
 
 import builders.StoreBuilder;
 import builders.StoreBuilderWithDirector.StoreDirector;

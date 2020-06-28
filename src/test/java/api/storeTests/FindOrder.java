@@ -1,4 +1,4 @@
-package api;
+package api.storeTests;
 
 import builders.StoreBuilder;
 import client.StoreClient;
@@ -32,13 +32,13 @@ public class FindOrder {
         sC.placeOrder(store);
 
         Response response = sC.getOrderById("3");
-        Store apiResponce = response.as(Store.class);
-        Assert.assertEquals(apiResponce.getId(),store.getId());
+        Store apiResponse = response.as(Store.class);
+        Assert.assertEquals(apiResponse.getId(),store.getId());
     }
 
 
     @Test(dataProvider = "createAndLookFor")
-    public void createAndCheckifAvailab(String idReqOne, String idReqTwo){
+    public void createAndLookForInvalidVal(String idReqOne, String idReqTwo){
 
             StoreBuilder builder = new StoreBuilder();
             Store store = builder.setId(idReqOne)
@@ -54,8 +54,8 @@ public class FindOrder {
             sC.placeOrder(store);
 
         Response response = sC.getOrderById(idReqTwo);
-        Store apiResponce = response.as(Store.class);
-        Assert.assertNotEquals(apiResponce.getId(),store.getId());
+        Store apiResponse = response.as(Store.class);
+        Assert.assertNotEquals(apiResponse.getId(),store.getId());
     }
 
     @DataProvider
@@ -64,7 +64,7 @@ public class FindOrder {
         Object [][] data = new Object [2][2];
 
         data[0][0] = "2";
-        data[0][1] = "3";
+        data[0][1] = "2.0";
         data[1][0] = "re";
         data[1][1] = "re";
 

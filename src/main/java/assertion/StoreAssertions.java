@@ -23,9 +23,30 @@ public class StoreAssertions {
 
     }
     public static void assertDeletedMessage(APIResponse apiResp,String id){
-        Assert.assertEquals(apiResp.getMessage(), id);
         Assert.assertEquals(apiResp.getType(), "unknown");
+        Assert.assertEquals(apiResp.getMessage(), id);
+
     }
 
+    public static void assertOrderNotFoundError(APIResponse apiResp){
+        Assert.assertEquals(apiResp.getCode(), "1");
+        Assert.assertEquals(apiResp.getType(), "error");
+        Assert.assertEquals(apiResp.getMessage(), "Order not found");
+
+    }
+
+    public static void assertOrderNotFoundUnknown(APIResponse apiResp){
+        Assert.assertEquals(apiResp.getCode(), "404");
+        Assert.assertEquals(apiResp.getType(), "unknown");
+        Assert.assertEquals(apiResp.getMessage(), "Order Not Found");
+
+    }
+
+    public static void assertNumberNotFoundExcept(APIResponse apiResp, String id){
+        Assert.assertEquals(apiResp.getCode(), "404");
+        Assert.assertEquals(apiResp.getType(), "unknown");
+        Assert.assertEquals(apiResp.getMessage(), "java.lang.NumberFormatException: For input string: \""+ id + "\"");
+
+    }
 
 }

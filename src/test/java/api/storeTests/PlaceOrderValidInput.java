@@ -1,4 +1,4 @@
-package api;
+package api.storeTests;
 
 import assertion.BaseAssertion;
 import assertion.StoreAssertions;
@@ -37,9 +37,24 @@ public class PlaceOrderValidInput {
 
     }
 
+//    @DataProvider
+//    public Object[][] validProperties() {
+//
+//        Object [][] data = new Object [2][2];
+//
+//        data[0][0] = "2";
+//        data[0][1] = "2.0";
+//        data[1][0] = "re";
+//        data[1][1] = "re";
+//
+//        return data;
+//    }
+    //add more valid inputs
+    // with @DataProvider
+
     @Test
     public void nullPropertiesOrder() {
-        System.out.println("validPropertiesOrder");
+        System.out.println("nullPropertiesOrder");
         StoreBuilder builder = new StoreBuilder();
         Store store = builder.setId(null)
                 .setPetId(null)
@@ -57,7 +72,7 @@ public class PlaceOrderValidInput {
 
     }
 
-
+//can be deleted if test# 1 is improved with @DataProvider
     @Test(dataProvider = "statusAnyInput")
     public void statusAnyInputOrder(String status) {
         System.out.println("statusAnyInput");
