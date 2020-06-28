@@ -1,23 +1,17 @@
 package assertion;
 
+import io.restassured.internal.http.Status;
 import io.restassured.response.Response;
 import model.APIResponse;
 import model.Store;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.net.HttpURLConnection;
+
 public class StoreAssertions {
 
-    public static void assertStatus200(Response response){
-        Assert.assertTrue(response.getStatusCode() == 200);
-    }
-
-    public static void assertServerError(APIResponse apiResp){
-        Assert.assertEquals(apiResp.getMessage(), "something bad happened");
-        Assert.assertEquals(apiResp.getType(), "unknown");
-    }
-
-    public static void assertPropertiesSet(Store apiResp, Store store){
+       public static void assertPropertiesSet(Store apiResp, Store store){
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(apiResp.getId(), store.getId());
         softAssert.assertEquals(apiResp.getPetId(), store.getPetId());
@@ -27,6 +21,10 @@ public class StoreAssertions {
         softAssert.assertEquals(apiResp.getComplete(), store.getComplete());
         softAssert.assertAll();
 
+    }
+    public static void assertDeletedMessage(APIResponse apiResp,String id){
+        Assert.assertEquals(apiResp.getMessage(), id);
+        Assert.assertEquals(apiResp.getType(), "unknown");
     }
 
 
