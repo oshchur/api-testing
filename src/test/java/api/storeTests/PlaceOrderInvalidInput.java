@@ -21,7 +21,7 @@ public class PlaceOrderInvalidInput {
         Store store = builder.setId(id)
                 .setPetId("33")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -44,7 +44,7 @@ public class PlaceOrderInvalidInput {
         Store store = builder.setId("3")
                 .setPetId(petId)
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -67,7 +67,7 @@ public class PlaceOrderInvalidInput {
         Store store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity(quantity)
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -90,7 +90,7 @@ public class PlaceOrderInvalidInput {
         Store store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete(complete)
                 .build();
@@ -108,7 +108,7 @@ public class PlaceOrderInvalidInput {
     @DataProvider
     public Object[] invalidInput() {
 
-        return new Object []{"tг","12345678912345678912", "!@#"};
+        return new Object []{"tг","12345678912345678912", "!@#", "6.0"};
     }
 
     @Test(dataProvider = "invalidDateFormat")

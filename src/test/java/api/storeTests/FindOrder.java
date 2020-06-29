@@ -22,7 +22,7 @@ public class FindOrder {
         Store store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -44,7 +44,7 @@ public class FindOrder {
             Store store = builder.setId(idReqOne)
                     .setPetId("3")
                     .setQuantity("1")
-                    .setShipDate("2020-06-10T14:00:28.542Z")
+                    .setShipDate("2020-06-10T14:00:28.542+0000")
                     .setStatus("placed")
                     .setComplete("true")
                     .build();

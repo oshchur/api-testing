@@ -5,10 +5,13 @@ import builders.StoreBuilder;
 import client.StoreClient;
 import io.restassured.response.Response;
 import model.Store;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
+
+import static org.hamcrest.Matchers.hasItem;
 
 public class GetInventory {
 
@@ -19,7 +22,7 @@ public class GetInventory {
         Store store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus(status)
                 .setComplete("true")
                 .build();
@@ -28,10 +31,8 @@ public class GetInventory {
         StoreClient sC = new StoreClient();
         sC.placeOrder(store);
         Response response = sC.getInventory();
-                response.prettyPrint();
-       // response.getBody().
-        //contains id
-
+        response.prettyPrint();
+       response.then().body("status", hasItem(status));
 
     }
 

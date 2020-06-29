@@ -7,6 +7,7 @@ import client.StoreClient;
 import io.restassured.response.Response;
 import model.APIResponse;
 import model.Store;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -18,7 +19,7 @@ public class PlaceOrderValidInput {
     public void validPropertiesOrder() {
         System.out.println("validPropertiesOrder");
         StoreBuilder builder = new StoreBuilder();
-        Store store = builder.setId("13")
+        Store store = builder.setId("3")
                 .setPetId("33")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")
@@ -36,21 +37,6 @@ public class PlaceOrderValidInput {
         StoreAssertions.assertPropertiesSet(apiResp, store);
 
     }
-
-//    @DataProvider
-//    public Object[][] validProperties() {
-//
-//        Object [][] data = new Object [2][2];
-//
-//        data[0][0] = "2";
-//        data[0][1] = "2.0";
-//        data[1][0] = "re";
-//        data[1][1] = "re";
-//
-//        return data;
-//    }
-    //add more valid inputs
-    // with @DataProvider
 
     @Test
     public void nullPropertiesOrder() {
@@ -72,7 +58,30 @@ public class PlaceOrderValidInput {
 
     }
 
-//can be deleted if test# 1 is improved with @DataProvider
+
+    @Test
+    public void shipDateHourNotSet() {
+        System.out.println("shipDateHourNotSet");
+        StoreBuilder builder = new StoreBuilder();
+        Store store = builder.setId("3")
+                .setPetId("33")
+                .setQuantity("1")
+                .setShipDate("2020-06-10")
+                .setStatus("placed")
+                .setComplete("true")
+                .build();
+        System.out.println(builder.build().toString());
+
+        StoreClient sC = new StoreClient();
+        Response response = sC.placeOrder(store);
+
+        BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
+        Store apiResp = response.getBody().as(Store.class);
+        Assert.assertEquals(apiResp.getShipDate(), "2020-06-10T00:00:00.000+0000");
+
+    }
+
+
     @Test(dataProvider = "statusAnyInput")
     public void statusAnyInputOrder(String status) {
         System.out.println("statusAnyInput");
@@ -80,7 +89,7 @@ public class PlaceOrderValidInput {
         Store store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus(status)
                 .setComplete("true")
                 .build();
@@ -99,6 +108,33 @@ public class PlaceOrderValidInput {
         return new Object []{"tг","12345678912345678912", "!@#"};
     }
 
+    @Test(dataProvider = "completeValidInputs")
+    public void completeValidInputs(String complete) {
+        System.out.println("completeValidInputs");
+        StoreBuilder builder = new StoreBuilder();
+        Store store = builder.setId("3")
+                .setPetId("33")
+                .setQuantity("1")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
+                .setStatus("placed")
+                .setComplete(complete)
+                .build();
+        System.out.println(builder.build().toString());
+
+        StoreClient sC = new StoreClient();
+        Response response = sC.placeOrder(store);
+
+        BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
+
+        Store apiResp = response.getBody().as(Store.class);
+        StoreAssertions.assertPropertiesSet(apiResp, store);
+
+    }
+    @DataProvider
+    public Object[] completeValidInputs() {
+
+        return new Object []{"true","false"};
+    }
 
 
 }

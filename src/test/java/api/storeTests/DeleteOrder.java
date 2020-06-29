@@ -23,7 +23,7 @@ public class DeleteOrder {
         Store store = builder.setId(id)
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -48,7 +48,7 @@ public class DeleteOrder {
         Store store = builder.setId(id)
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -76,7 +76,7 @@ public class DeleteOrder {
         Store store = builder.setId(id)
                 .setPetId("3")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
@@ -101,7 +101,7 @@ public class DeleteOrder {
         Store store = builder.setId(id)
                 .setPetId("1")
                 .setQuantity("1")
-                .setShipDate("2020-06-10T14:00:28.542Z")
+                .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
