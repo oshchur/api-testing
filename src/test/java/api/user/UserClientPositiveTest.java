@@ -1,6 +1,7 @@
 package api.user;
 
 import assertion.BaseAssertion;
+import assertion.LogResponse;
 import assertion.UserAssertion;
 import builders.UserBuilder;
 import client.UserClient;
@@ -52,5 +53,11 @@ public class UserClientPositiveTest {
 
         Response response = userClient.updateByUsername("Malina", user);
         BaseAssertion.checkResponse(response, 200);
+    }
+
+    @Test
+    public void createTest() {
+        new BaseAssertion(userClient.create(userBuilder.constructRandomValidUser()))
+                .checkResponse(200);
     }
 }

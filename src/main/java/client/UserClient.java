@@ -35,18 +35,18 @@ public class UserClient extends BaseClient {
     }
 
     public Response login(String name, String password) {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification())
                 .queryParam("name", name, "password", password)
                 .get(LOGIN_URL);
     }
 
     public Response logout() {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification())
                 .get(LOGOUT_URL);
     }
 
     public Response create(User user) {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification())
                 .body(user)
                 .post(USER_URL);
     }
