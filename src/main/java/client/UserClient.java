@@ -12,6 +12,7 @@ public class UserClient extends BaseClient {
     private static final String USER_URL = "/user";
     private static final String CREATE_WITH_USER_LIST_URL = USER_URL + "/createWithList";
     private static final String GET_BY_USERNAME_URL = USER_URL + "/{username}";
+    private static final String DELETE_URL = GET_BY_USERNAME_URL;
     private static final String LOGIN_URL = USER_URL + "/login";
     private static final String LOGOUT_URL = USER_URL + "/logout";
 
@@ -49,5 +50,11 @@ public class UserClient extends BaseClient {
         return given(baseRequestSpecification())
                 .body(user)
                 .post(USER_URL);
+    }
+
+    public Response delete(String userName) {
+        return given(baseRequestSpecification())
+                .pathParam("username", userName)
+                .delete(DELETE_URL);
     }
 }
