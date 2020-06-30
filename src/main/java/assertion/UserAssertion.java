@@ -13,7 +13,7 @@ public class UserAssertion {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(user.getUsername(), "Malina", "Error - incorrect username");
         softAssert.assertEquals(user.getFirstName(), "Taras", "Error - incorrect first name");
-        softAssert.assertEquals(user.getLastName(), "Malinovich", "Error - incorrect last name");
+        softAssert.assertEquals(user.getLastName(), "Malynovskyi", "Error - incorrect last name");
         softAssert.assertEquals(user.getEmail(), "tarasmalynovskyy@gmail.com", "Error - incorrect email");
         softAssert.assertEquals(user.getPhone(), "+3806333333", "Error - incorrect phone");
         softAssert.assertAll();
