@@ -7,6 +7,7 @@ import client.UserClient;
 import io.restassured.internal.http.Status;
 import io.restassured.response.Response;
 import model.User;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class UserClientNegativeTest {
     UserClient userClient;
     UserBuilder userBuilder;
+    User user;
 
     @BeforeClass
     public void beforeClass() {
