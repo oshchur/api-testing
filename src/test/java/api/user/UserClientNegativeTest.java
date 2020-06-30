@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 public class UserClientNegativeTest {
     UserClient userClient;
     UserBuilder userBuilder;
+    User user;
 
     @BeforeClass
     public void beforeClass() {
@@ -48,4 +49,20 @@ public class UserClientNegativeTest {
 
         BaseAssertion.checkResponse(response, 404);
     }
+
+    @Test
+    public void createTest() {
+        user = userBuilder.constructRandomValidUser();
+        userClient.create(user);
+    }
+
+    //unfortunatelly swagger allow login() before create()
+    @Test(dependsOnMethods = "createTest")
+    public void tryLoginAfterDelete() {
+        userClient.delete(user.getUsername());
+        new BaseAssertion(userClient.login(user.getUsername(), user.getPassword()))
+                .checkResponse(400);
+    }
+
+
 }
