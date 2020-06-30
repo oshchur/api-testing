@@ -1,7 +1,11 @@
 package assertion;
 
 import io.restassured.response.Response;
+import model.APIResponse;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import java.net.HttpURLConnection;
 
 public class BaseAssertion {
     private Response response;
@@ -47,5 +51,14 @@ public class BaseAssertion {
     //version of previous method with default LogResponse : 'ALL'
     public void checkResponse(int statusCode) {
         checkResponse(LogResponse.ALL, statusCode);
+    }
+
+    public static void assertServerError(APIResponse apiResp){
+        Assert.assertEquals(apiResp.getMessage(), "something bad happened");
+        Assert.assertEquals(apiResp.getType(), "unknown");
+    }
+
+    public static void assertStatus(Response response, int status){
+        Assert.assertEquals(response.getStatusCode(), status);
     }
 }
