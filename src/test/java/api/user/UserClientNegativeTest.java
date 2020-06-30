@@ -7,6 +7,7 @@ import client.UserClient;
 import io.restassured.internal.http.Status;
 import io.restassured.response.Response;
 import model.User;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -76,20 +77,4 @@ public class UserClientNegativeTest {
 
         BaseAssertion.checkResponse(response, Status.SUCCESS);
     }
-
-    @Test
-    public void createTest() {
-        user = userBuilder.constructRandomValidUser();
-        userClient.create(user);
-    }
-
-    //unfortunatelly swagger allow login() before create()
-    @Test(dependsOnMethods = "createTest")
-    public void tryLoginAfterDelete() {
-        userClient.delete(user.getUsername());
-        new BaseAssertion(userClient.login(user.getUsername(), user.getPassword()))
-                .checkResponse(400);
-    }
-
-
 }
