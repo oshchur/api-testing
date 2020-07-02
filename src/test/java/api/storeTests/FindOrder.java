@@ -2,72 +2,57 @@ package api.storeTests;
 
 import builders.StoreBuilder;
 import client.StoreClient;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import model.Store;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.hamcrest.Matchers.hasItem;
-
 public class FindOrder {
 
-    @Test
-    public void createAndFindOrder(){
+    private Store store;
+    StoreBuilder builder;
 
-        StoreBuilder builder = new StoreBuilder();
-        Store store = builder.setId("3")
+    @BeforeMethod
+    public void createStore() {
+        builder = new StoreBuilder();
+        store = builder.setId("3")
                 .setPetId("3")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")
                 .setStatus("placed")
                 .setComplete("true")
                 .build();
-        System.out.println(builder.build().toString());
+
+    }
+
+    @Test
+    public void lookForExistingOrder() {
 
         StoreClient sC = new StoreClient();
         sC.placeOrder(store);
-
-        Response response = sC.getOrderById("3");
+        Response response = sC.getOrderById(store.getId());
         Store apiResponse = response.as(Store.class);
-        Assert.assertEquals(apiResponse.getId(),store.getId());
+        Assert.assertEquals(apiResponse.getId(), store.getId());
     }
 
 
-    @Test(dataProvider = "createAndLookFor")
-    public void createAndLookForInvalidVal(String idReqOne, String idReqTwo){
+    @Test(dataProvider = "lookWithInvalidValues")
+    public void lookWithInvalidValues(String id) {
 
-            StoreBuilder builder = new StoreBuilder();
-            Store store = builder.setId(idReqOne)
-                    .setPetId("3")
-                    .setQuantity("1")
-                    .setShipDate("2020-06-10T14:00:28.542+0000")
-                    .setStatus("placed")
-                    .setComplete("true")
-                    .build();
-            System.out.println(builder.build().toString());
+        StoreClient sC = new StoreClient();
 
-            StoreClient sC = new StoreClient();
-            sC.placeOrder(store);
 
-        Response response = sC.getOrderById(idReqTwo);
+        Response response = sC.getOrderById(id);
         Store apiResponse = response.as(Store.class);
-        Assert.assertNotEquals(apiResponse.getId(),store.getId());
+        Assert.assertNotEquals(apiResponse.getId(), store.getId());
     }
 
     @DataProvider
-    public Object[][] createAndLookFor() {
+    public Object[] lookWithInvalidValues() {
 
-        Object [][] data = new Object [2][2];
+        return new Object[]{"2.0", "re"};
 
-        data[0][0] = "2";
-        data[0][1] = "2.0";
-        data[1][0] = "re";
-        data[1][1] = "re";
-
-        return data;
     }
 }
