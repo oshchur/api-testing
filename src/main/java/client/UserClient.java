@@ -1,6 +1,6 @@
 package client;
 
-import io.restassured.http.ContentType;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import model.User;
 
@@ -17,19 +17,19 @@ public class UserClient extends BaseClient {
     private static final String LOGOUT_URL = USER_URL + "/logout";
 
     public Response createWithList(final List<User> users) {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification(LogDetail.BODY))
                 .body(users)
                 .post(CREATE_WITH_USER_LIST_URL);
     }
 
     public Response getUserByUsername(final String username) {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification(LogDetail.BODY))
                 .pathParam("username", username)
                 .get(GET_BY_USERNAME_URL);
     }
 
     public Response updateByUsername(final String username, final User user) {
-        return given(baseRequestSpecification(ContentType.JSON))
+        return given(baseRequestSpecification(LogDetail.BODY))
                 .body(user)
                 .pathParam("username", username)
                 .put(GET_BY_USERNAME_URL);

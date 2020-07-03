@@ -4,10 +4,8 @@ import assertion.BaseAssertion;
 import assertion.UserAssertion;
 import builders.UserBuilder;
 import client.UserClient;
-import io.restassured.internal.http.Status;
 import io.restassured.response.Response;
 import model.User;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,7 +29,7 @@ public class UserClientNegativeTest {
     public void createByEmptyList() {
         Response response = userClient.createWithList(new ArrayList<>());
 
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_ACCEPTABLE);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 
     @Test(dataProvider = "getInvalidUsernames")
@@ -52,13 +50,13 @@ public class UserClientNegativeTest {
     public void updateByEmptyUsername() {
         final Response response = userClient.updateByUsername("", user);
 
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_BAD_METHOD);
     }
 
     @Test
     public void updateByInvalidUsername() {
         final Response response = userClient.updateByUsername("Orevo", user);
 
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_FOUND);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 }

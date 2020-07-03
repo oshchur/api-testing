@@ -22,10 +22,10 @@ public class UserAssertion {
     public static void checkInvalidUser(final User actualUser) {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNull(actualUser.getUsername(), "Error - incorrect username");
-        softAssert.assertEquals(actualUser.getFirstName(), "Error - incorrect first name");
-        softAssert.assertEquals(actualUser.getLastName(), "Error - incorrect last name");
-        softAssert.assertEquals(actualUser.getEmail(), "Error - incorrect email");
-        softAssert.assertEquals(actualUser.getPhone(), "Error - incorrect phone");
+        softAssert.assertNull(actualUser.getFirstName(), "Error - incorrect first name");
+        softAssert.assertNull(actualUser.getLastName(), "Error - incorrect last name");
+        softAssert.assertNull(actualUser.getEmail(), "Error - incorrect email");
+        softAssert.assertNull(actualUser.getPhone(), "Error - incorrect phone");
         softAssert.assertAll();
     }
 }

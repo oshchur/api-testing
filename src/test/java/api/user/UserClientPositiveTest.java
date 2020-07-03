@@ -52,7 +52,7 @@ public class UserClientPositiveTest {
     @Test
     public void updateUserByUsername() {
         final User user = userClient.getUserByUsername("Malina").as(User.class);
-        user.setLastName("Malinovich");
+        user.setLastName("Malynovskyi");
 
         Response response = userClient.updateByUsername("Malina", user);
 
