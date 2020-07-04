@@ -4,7 +4,6 @@ import assertion.BaseAssertion;
 import assertion.UserAssertion;
 import builders.UserBuilder;
 import client.UserClient;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import model.User;
 import org.testng.annotations.BeforeClass;
@@ -62,7 +61,7 @@ public class UserClientPositiveTest {
 
     @Test
     public void createTest() {
-        user = new UserBuilder().constructRandomInvalidUser();
+        User user = new UserBuilder().constructRandomInvalidUser();
         Response response = userClient.create(user);
         BaseAssertion.checkResponse(response, 200);
     }

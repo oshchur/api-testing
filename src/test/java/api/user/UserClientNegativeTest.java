@@ -43,7 +43,14 @@ public class UserClientNegativeTest {
 
     @DataProvider
     private Object[] getInvalidUsernames() {
-        return new Object[]{"Tarantino", "5656", " "};
+        return new Object[]{"Tarantino",
+                "5656",
+                " ",
+                "флдж",
+                "*/!@##!@%$!",
+                "4322___vfdjkqWW",
+                "     ",
+                "  asd221342 4 324 ",};
     }
 
     @Test
