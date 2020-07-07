@@ -15,7 +15,6 @@ public abstract class BaseClient {
         
         return new RequestSpecBuilder()
                 .addFilter(new ErrorLoggingFilter())
-                .addFilter(new ErrorLoggingFilter())
                 .setBaseUri(baseUrl)
                 .setAccept(contentType)
                 .setContentType(contentType)
