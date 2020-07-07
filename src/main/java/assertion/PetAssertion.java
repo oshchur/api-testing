@@ -1,6 +1,5 @@
 package assertion;
 
-import io.restassured.response.Response;
 import model.Pet;
 import org.testng.asserts.SoftAssert;
 

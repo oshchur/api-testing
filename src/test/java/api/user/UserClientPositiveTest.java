@@ -63,13 +63,28 @@ public class UserClientPositiveTest {
     public void createTest() {
         User user = new UserBuilder().constructRandomInvalidUser();
         Response response = userClient.create(user);
-        BaseAssertion.checkResponse(response, 200);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 
     @Test
     public void logoutTest() {
         Response response = userClient.logout();
-        BaseAssertion.checkResponse(response, 200);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
+    }
+
+    @Test
+    public void loginTest() {
+        User user = new UserBuilder().constructRandomValidUser();
+        Response response = userClient.login(user.getUsername(), user.getPassword());
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
+    }
+
+    @Test
+    public void deleteTest() {
+        User user = new UserBuilder().constructRandomValidUser();
+        userClient.create(user);
+        Response response = userClient.delete(user.getUsername());
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 
 }

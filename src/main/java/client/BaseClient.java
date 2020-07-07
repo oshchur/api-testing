@@ -1,13 +1,11 @@
 package client;
 
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.config.LogConfig;
+import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public abstract class BaseClient {
@@ -16,8 +14,8 @@ public abstract class BaseClient {
     protected final RequestSpecification baseRequestSpecification(final ContentType contentType, LogDetail logDetail) {
         
         return new RequestSpecBuilder()
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+                .addFilter(new ErrorLoggingFilter())
+                .addFilter(new ErrorLoggingFilter())
                 .setBaseUri(baseUrl)
                 .setAccept(contentType)
                 .setContentType(contentType)

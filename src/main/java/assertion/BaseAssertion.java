@@ -6,8 +6,6 @@ import model.APIResponse;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.net.HttpURLConnection;
-
 public class BaseAssertion {
 
     public static void checkResponse(final Response response, final int statusCode) {
