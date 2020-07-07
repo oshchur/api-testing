@@ -8,10 +8,11 @@ import io.restassured.response.Response;
 import model.Pet;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.log4testng.Logger;
 
-public class petClientPositiveTests {
-    private static final Logger log = Logger.getLogger(petClientPositiveTests.class);
+import java.net.HttpURLConnection;
+
+public class PetClientPositiveTest {
+
 
     PetClient petClient;
     PetBuilder petBuilder;
@@ -28,26 +29,23 @@ public class petClientPositiveTests {
     public void getPetById() {
         Response response = petClient.getPetById("5");
         Pet pet = response.as(Pet.class);
-        BaseAssertion.checkResponse(response, 200);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
         PetAssertion.checkValidPet(pet);
     }
 
     @Test
     public void getPetByStatus() {
         Response response = petClient.getPetByStatus("sold");
-        BaseAssertion.checkResponse(response, 200);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
 
     }
-
 
     @Test
     public void deletePetById() {
 
-        Pet pet = new Pet();
-        PetClient petClient = new PetClient();
-        pet.setId("5");
-        String id = pet.getId();
-        String str = petClient.deletePetById(id).getBody().asString();
-        log.info(str);
+        Pet pet = new PetBuilder().build();
+        petClient.createPet(pet);
+        Response response = petClient.deletePetById(pet.getId());
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 }
