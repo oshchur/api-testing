@@ -1,8 +1,10 @@
 package api.storeTests;
 
+import assertion.StoreAssertions;
 import builders.StoreBuilder;
 import client.StoreClient;
 import io.restassured.response.Response;
+import model.APIResponse;
 import model.Store;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +16,7 @@ public class FindOrder {
     private Store store;
     StoreBuilder builder;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createStore() {
         builder = new StoreBuilder();
         store = builder.setId("3")
@@ -42,11 +44,9 @@ public class FindOrder {
     public void lookWithInvalidValues(String id) {
 
         StoreClient sC = new StoreClient();
-
-
         Response response = sC.getOrderById(id);
-        Store apiResponse = response.as(Store.class);
-        Assert.assertNotEquals(apiResponse.getId(), store.getId());
+        APIResponse apiResponse = response.as(APIResponse.class);
+        StoreAssertions.assertNumberNotFoundExcept(apiResponse, id);
     }
 
     @DataProvider

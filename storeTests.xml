@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="allStoreTests" parallel="classes" thread-count="5">
+    <test verbose="10" preserve-order="true" name="allStoreTests" parallel="classes" thread-count="5">
         <classes>
             <class name="api.storeTests.DeleteOrder"/>
             <class name="api.storeTests.FindOrder"/>

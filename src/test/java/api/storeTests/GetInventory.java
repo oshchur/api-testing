@@ -15,10 +15,10 @@ public class GetInventory {
     private Store store;
     StoreBuilder builder;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createStore() {
         builder = new StoreBuilder();
-        store = builder.setId("3")
+        store = builder.setId("4")
                 .setPetId("3")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")

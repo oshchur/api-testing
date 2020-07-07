@@ -19,10 +19,10 @@ public class DeleteOrder {
     private Store store;
     StoreBuilder builder;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createStore() {
         builder = new StoreBuilder();
-        store = builder.setId("3")
+        store = builder.setId("1")
                 .setPetId("3")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")
@@ -36,10 +36,8 @@ public class DeleteOrder {
     public void deleteValidOrder() {
 
         StoreClient sC = new StoreClient();
-
         sC.placeOrder(store);
         Response response = sC.deleteOrderById(store.getId());
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
         APIResponse apiResponse = response.as(APIResponse.class);
         StoreAssertions.assertDeletedMessage(apiResponse, store.getId());
@@ -50,11 +48,9 @@ public class DeleteOrder {
     public void deleteAndLookFor() {
 
         StoreClient sC = new StoreClient();
-
         sC.placeOrder(store);
         sC.deleteOrderById(store.getId());
         Response response = sC.getOrderById(store.getId());
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_NOT_FOUND);
         APIResponse apiResponse = response.as(APIResponse.class);
         StoreAssertions.assertOrderNotFoundError(apiResponse);
@@ -66,11 +62,9 @@ public class DeleteOrder {
     public void deleteNonExistOrder() {
 
         StoreClient sC = new StoreClient();
-
         sC.placeOrder(store);
         sC.deleteOrderById(store.getId());
         Response response = sC.deleteOrderById(store.getId());
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_NOT_FOUND);
         APIResponse apiResponse = response.as(APIResponse.class);
         StoreAssertions.assertOrderNotFoundUnknown(apiResponse);
@@ -80,10 +74,8 @@ public class DeleteOrder {
     public void deleteInvalidOrder(String id) {
 
         StoreClient sC = new StoreClient();
-
         sC.placeOrder(store);
         Response response = sC.getOrderById(id);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_NOT_FOUND);
         APIResponse apiResponse = response.as(APIResponse.class);
         StoreAssertions.assertNumberNotFoundExcept(apiResponse, id);
