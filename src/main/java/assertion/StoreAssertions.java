@@ -1,13 +1,9 @@
 package assertion;
 
-import io.restassured.internal.http.Status;
-import io.restassured.response.Response;
 import model.APIResponse;
 import model.Store;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-
-import java.net.HttpURLConnection;
 
 public class StoreAssertions {
 
