@@ -8,21 +8,10 @@ import model.User;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserClientDeletePositiveTest {
-    UserClient userClient;
-    UserBuilder userBuilder;
-
-    @BeforeClass
-    public void beforeClass() {
-        userClient = new UserClient();
-        userBuilder = new UserBuilder();
-    }
-
+public class UserClientDeletePositiveTest extends BaseUserClientTest {
     @Test(dataProvider = "users")
     public void createAndThenDeleteUser(User user) {
         userClient.create(user);
