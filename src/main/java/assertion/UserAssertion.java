@@ -9,23 +9,23 @@ public class UserAssertion {
 
     }
 
-    public static void checkValidUser(final User user) {
+    public static void checkValidUser(final User actualUser, final User expectedUser) {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(user.getUsername(), "Malina", "Error - incorrect username");
-        softAssert.assertEquals(user.getFirstName(), "Taras", "Error - incorrect first name");
-        softAssert.assertEquals(user.getLastName(), "Malinovich", "Error - incorrect last name");
-        softAssert.assertEquals(user.getEmail(), "tarasmalynovskyy@gmail.com", "Error - incorrect email");
-        softAssert.assertEquals(user.getPhone(), "+3806333333", "Error - incorrect phone");
+        softAssert.assertEquals(actualUser.getUsername(), expectedUser.getUsername(), "Error - incorrect username");
+        softAssert.assertEquals(actualUser.getFirstName(), expectedUser.getFirstName(), "Error - incorrect first name");
+        softAssert.assertEquals(actualUser.getLastName(), expectedUser.getLastName(), "Error - incorrect last name");
+        softAssert.assertEquals(actualUser.getEmail(), expectedUser.getEmail(), "Error - incorrect email");
+        softAssert.assertEquals(actualUser.getPhone(), expectedUser.getPhone(), "Error - incorrect phone");
         softAssert.assertAll();
     }
 
-    public static void checkInvalidUser(final User user) {
+    public static void checkInvalidUser(final User actualUser) {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(user.getUsername(), null, "Error - incorrect username");
-        softAssert.assertEquals(user.getFirstName(), null, "Error - incorrect first name");
-        softAssert.assertEquals(user.getLastName(), null, "Error - incorrect last name");
-        softAssert.assertEquals(user.getEmail(), null, "Error - incorrect email");
-        softAssert.assertEquals(user.getPhone(), null, "Error - incorrect phone");
+        softAssert.assertNull(actualUser.getUsername(), "Error - incorrect username");
+        softAssert.assertNull(actualUser.getFirstName(), "Error - incorrect first name");
+        softAssert.assertNull(actualUser.getLastName(), "Error - incorrect last name");
+        softAssert.assertNull(actualUser.getEmail(), "Error - incorrect email");
+        softAssert.assertNull(actualUser.getPhone(), "Error - incorrect phone");
         softAssert.assertAll();
     }
 }

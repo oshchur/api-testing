@@ -1,7 +1,5 @@
 package builders.StoreBuilderWithDirector;
 
-import builders.StoreBuilderWithDirector.StoreBuilder;
-
 public class StoreValidParam extends StoreBuilder {
 
 

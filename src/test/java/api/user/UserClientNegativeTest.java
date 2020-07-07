@@ -10,14 +10,26 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+
 public class UserClientNegativeTest {
     UserClient userClient;
     UserBuilder userBuilder;
+    User user;
 
     @BeforeClass
     public void beforeClass() {
         userClient = new UserClient();
         userBuilder = new UserBuilder();
+        user = userBuilder.build();
+    }
+
+    @Test
+    public void createByEmptyList() {
+        Response response = userClient.createWithList(new ArrayList<>());
+
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 
     @Test(dataProvider = "getInvalidUsernames")
@@ -25,27 +37,33 @@ public class UserClientNegativeTest {
         final Response response = userClient.getUserByUsername(username);
         final User user = response.as(User.class);
 
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_FOUND);
         UserAssertion.checkInvalidUser(user);
     }
 
     @DataProvider
     private Object[] getInvalidUsernames() {
-        return new Object[]{"Tarantino", "5656", " ", ""};
+        return new Object[]{"Tarantino",
+                "5656",
+                " ",
+                "флдж",
+                "*/!@##!@%$!",
+                "4322___vfdjkqWW",
+                "     ",
+                "  asd221342 4 324 ",};
+    }
+
+    @Test
+    public void updateByEmptyUsername() {
+        final Response response = userClient.updateByUsername("", user);
+
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_BAD_METHOD);
     }
 
     @Test
     public void updateByInvalidUsername() {
-        final User user = userBuilder
-                .setUserName("Malina")
-                .setFirstName("Taras")
-                .setLastName("Malinovich")
-                .setEmail("tarasmalynovskyy@gmail.com")
-                .setPassword("!Qwerty123")
-                .setPhone("+3806333333")
-                .build();
-
         final Response response = userClient.updateByUsername("Orevo", user);
 
-        BaseAssertion.checkResponse(response, 404);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 }

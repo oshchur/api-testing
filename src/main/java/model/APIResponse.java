@@ -1,8 +1,5 @@
 package model;
 
-import com.google.gson.Gson;
-import org.json.JSONObject;
-
 public class APIResponse {
     public String code;
     public String type;

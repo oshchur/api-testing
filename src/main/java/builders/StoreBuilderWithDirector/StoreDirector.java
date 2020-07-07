@@ -1,6 +1,5 @@
 package builders.StoreBuilderWithDirector;
 
-import builders.StoreBuilderWithDirector.StoreBuilder;
 import model.Store;
 
 public class StoreDirector {
