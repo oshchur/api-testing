@@ -8,10 +8,10 @@ import io.restassured.response.Response;
 import model.Pet;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.testng.log4testng.Logger;
 
-public class petClientNegativeTests {
-    private static final Logger log = Logger.getLogger(petClientPositiveTests.class);
+import java.net.HttpURLConnection;
+
+public class PetClientNegativeTest {
     PetClient petClient;
     PetBuilder petBuilder;
 
@@ -31,18 +31,20 @@ public class petClientNegativeTests {
     @Test
     public void deletePet() {
         Response response = petClient.deletePetById("234234234");
-        BaseAssertion.checkResponse(response, 404);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_FOUND);
 
     }
-
 
     @Test
-    public void builderTest() {
-        Pet pet = petBuilder
-                .setName("Jack")
-                .setId("123123123123")
-                .setStatus("iddqd")
+    public void updateEmptyPet() {
+        PetBuilder builder = new PetBuilder();
+        Pet pet = builder.setId("")
+                .setId("")
+                .setStatus("")
                 .build();
-        log.info(pet);
+        PetClient petClient = new PetClient();
+        Response response = petClient.createPet(pet);
+        BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_BAD_REQUEST);
     }
+
 }
