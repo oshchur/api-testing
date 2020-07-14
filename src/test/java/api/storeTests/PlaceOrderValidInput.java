@@ -18,10 +18,10 @@ public class PlaceOrderValidInput {
     private Store store;
     StoreBuilder builder;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createStore() {
         builder = new StoreBuilder();
-        store = builder.setId("3")
+        store = builder.setId("2")
                 .setPetId("3")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")
@@ -36,7 +36,6 @@ public class PlaceOrderValidInput {
 
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
         Store apiResp = response.getBody().as(Store.class);
         StoreAssertions.assertPropertiesSet(apiResp, store);
@@ -65,11 +64,10 @@ public class PlaceOrderValidInput {
 
     @Test
     public void shipHourNotSet() {
-        store.setShipDate("2020-06-10");
 
+        store.setShipDate("2020-06-10");
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
         Store apiResp = response.getBody().as(Store.class);
         Assert.assertEquals(apiResp.getShipDate(), "2020-06-10T00:00:00.000+0000");
@@ -81,10 +79,8 @@ public class PlaceOrderValidInput {
     public void statusAnyInputOrder(String status) {
 
         store.setStatus(status);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
 
 
@@ -98,11 +94,10 @@ public class PlaceOrderValidInput {
 
     @Test(dataProvider = "completeValidInputs")
     public void completeValidInputs(String complete) {
-        store.setComplete(complete);
 
+        store.setComplete(complete);
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_OK);
         Store apiResp = response.getBody().as(Store.class);
         StoreAssertions.assertPropertiesSet(apiResp, store);

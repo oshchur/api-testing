@@ -17,10 +17,10 @@ public class PlaceOrderInvalidInput {
     private Store store;
     StoreBuilder builder;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createStore() {
         builder = new StoreBuilder();
-        store = builder.setId("3")
+        store = builder.setId("5")
                 .setPetId("3")
                 .setQuantity("1")
                 .setShipDate("2020-06-10T14:00:28.542+0000")
@@ -34,10 +34,8 @@ public class PlaceOrderInvalidInput {
     public void invalidIdOrder(String id) {
 
         store.setId(id);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_INTERNAL_ERROR);
         APIResponse apiResp = response.getBody().as(APIResponse.class);
         BaseAssertion.assertServerError(apiResp);
@@ -49,10 +47,8 @@ public class PlaceOrderInvalidInput {
     public void invalidPetIdOrder(String petId) {
 
         store.setId(petId);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_INTERNAL_ERROR);
         APIResponse apiResp = response.getBody().as(APIResponse.class);
         BaseAssertion.assertServerError(apiResp);
@@ -64,10 +60,8 @@ public class PlaceOrderInvalidInput {
     public void invalidQuantityOrder(String quantity) {
 
         store.setQuantity(quantity);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_INTERNAL_ERROR);
         APIResponse apiResp = response.getBody().as(APIResponse.class);
         BaseAssertion.assertServerError(apiResp);
@@ -79,10 +73,8 @@ public class PlaceOrderInvalidInput {
     public void invalidCompleteOrder(String complete) {
 
         store.setComplete(complete);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_INTERNAL_ERROR);
         APIResponse apiResp = response.getBody().as(APIResponse.class);
         BaseAssertion.assertServerError(apiResp);
@@ -99,10 +91,8 @@ public class PlaceOrderInvalidInput {
     public void invalidDateFormatOrder(String shipDate) {
 
         store.setShipDate(shipDate);
-
         StoreClient sC = new StoreClient();
         Response response = sC.placeOrder(store);
-
         BaseAssertion.assertStatus(response, HttpURLConnection.HTTP_INTERNAL_ERROR);
         APIResponse apiResp = response.getBody().as(APIResponse.class);
         BaseAssertion.assertServerError(apiResp);
