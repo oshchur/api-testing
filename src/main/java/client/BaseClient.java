@@ -14,7 +14,8 @@ public abstract class BaseClient {
     protected final RequestSpecification baseRequestSpecification(final ContentType contentType, LogDetail logDetail) {
         
         return new RequestSpecBuilder()
-                .addFilter(new ErrorLoggingFilter())
+                .addFilter(new RequestLoggingFilter())
+                .addFilter(new RequestLoggingFilter())
                 .addFilter(new ErrorLoggingFilter())
                 .setBaseUri(baseUrl)
                 .setAccept(contentType)
