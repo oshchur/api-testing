@@ -42,10 +42,12 @@ public class UserClientPositiveTest {
 
     @Test
     public void getUserByUsername() {
-        final Response response = userClient.getUserByUsername("Malina");
-        final User user = response.as(User.class);
+        final Response createUserResponse = userClient.create(expectedUser);
+        final Response getUserByUsernameResponse = userClient.getUserByUsername("Malina");
+        final User user = getUserByUsernameResponse.as(User.class);
 
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
+        BaseAssertion.checkResponse(createUserResponse, HttpURLConnection.HTTP_OK);
+        BaseAssertion.checkResponse(getUserByUsernameResponse, HttpURLConnection.HTTP_OK);
         UserAssertion.checkValidUser(user, expectedUser);
     }
 
