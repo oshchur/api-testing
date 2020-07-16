@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>api-testing</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <url>https://petstore.swagger.io/</url>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -96,6 +97,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
+                    <parallel>classes</parallel>
+                    <threadCount>7</threadCount>
                     <testFailureIgnore>true</testFailureIgnore>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
