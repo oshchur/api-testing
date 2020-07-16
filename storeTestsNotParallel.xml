@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="All Test Suite">
+    <test verbose="10" preserve-order="true" name="allStoreTests">
+        <classes>
+            <class name="api.storeTests.DeleteOrder"/>
+            <class name="api.storeTests.FindOrder"/>
+            <class name="api.storeTests.GetInventory"/>
+            <class name="api.storeTests.PlaceOrderInvalidInput"/>
+            <class name="api.storeTests.PlaceOrderValidInput"/>
+        </classes>
+    </test>
+</suite>
