@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class FindOrder {
+public class FindOrderTest {
 
     private Store store;
     StoreBuilder builder;

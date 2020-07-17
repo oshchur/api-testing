@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 
-public class PlaceOrderInvalidInput {
+public class PlaceOrderInvalidInputTest {
 
     private Store store;
     StoreBuilder builder;

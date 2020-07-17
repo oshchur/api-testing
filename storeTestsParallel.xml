@@ -4,11 +4,11 @@
 <suite name="All Test Suite">
     <test verbose="10" preserve-order="true" name="allStoreTests" parallel="classes" thread-count="5">
         <classes>
-            <class name="api.storeTests.DeleteOrder"/>
-            <class name="api.storeTests.FindOrder"/>
-            <class name="api.storeTests.GetInventory"/>
-            <class name="api.storeTests.PlaceOrderInvalidInput"/>
-            <class name="api.storeTests.PlaceOrderValidInput"/>
+            <class name="api.storeTests.DeleteOrderTest"/>
+            <class name="api.storeTests.FindOrderTest"/>
+            <class name="api.storeTests.GetInventoryTest"/>
+            <class name="api.storeTests.PlaceOrderInvalidInputTest"/>
+            <class name="api.storeTests.PlaceOrderValidInputTest"/>
         </classes>
     </test>
 </suite>
