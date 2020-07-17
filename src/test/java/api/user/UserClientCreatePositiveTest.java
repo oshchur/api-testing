@@ -25,11 +25,12 @@ public class UserClientCreatePositiveTest extends BaseUserClientTest {
     }
 
     @Test(dataProvider = "getCreatingUsers")
-    public void createUserThenGetHimAndCheck(User user) {
-        User returnUser = userClient.getUserFromResponseSendingRequestWithName(user.getUsername());
+    public void createUserGetHimAndCheck_version_2(User user) {
+        userClient.create(user);
+        Response response = userClient.getUserByUsername(user.getUsername());
+        User returnUser = response.as(User.class);
         UserAssertion.checkValidUser(user, returnUser);
     }
-
     @DataProvider
     public Object[] getCreatingUsers() {
         List<User> users = userBuilder.constructRandomListValidUsers(4);
@@ -38,4 +39,5 @@ public class UserClientCreatePositiveTest extends BaseUserClientTest {
         }
         return  users.toArray();
     }
+
 }
