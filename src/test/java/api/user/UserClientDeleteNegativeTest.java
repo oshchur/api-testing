@@ -3,6 +3,7 @@ package api.user;
 import assertion.BaseAssertion;
 import io.restassured.response.Response;
 import model.User;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -13,7 +14,7 @@ public class UserClientDeleteNegativeTest extends BaseUserClientTest {
     public void deleteUnexistingUser() {
         User user = userBuilder.constructRandomValidUser();
         Response response = userClient.delete(user.getUsername());
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_FOUND);
+        Assert.assertEquals(response.getStatusCode(), HttpURLConnection.HTTP_NOT_FOUND);
     }
 
     @Test

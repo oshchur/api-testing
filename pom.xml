@@ -7,11 +7,15 @@
     <groupId>org.example</groupId>
     <artifactId>api-testing</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <url>https://petstore.swagger.io/</url>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <aspectj.version>1.9.5</aspectj.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <parallelBy>classes</parallelBy>
+        <threadCount>5</threadCount>
     </properties>
 
     <dependencies>
@@ -48,32 +52,65 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--Reporting-->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-testng</artifactId>
-            <version>2.13.3</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.30</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+
     </dependencies>
 
-   <build>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
         <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.9</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+    <build>
+        <plugins>
+          
+            <!-- Compiler plug-in -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Added Surefire Plugin configuration to execute tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
+                <version>2.22.2</version>
                 <configuration>
-                    <parallel>classes</parallel>
-<!--                     <threadCount>5</threadCount>-->
-                     <useUnlimitedThreads>true</useUnlimitedThreads>
-                    <threadCountClasses>1</threadCountClasses>
+                    <parallel>${parallelBy}</parallel>
+                    <threadCount>${threadCount}</threadCount>
+<!--                     <useUnlimitedThreads>true</useUnlimitedThreads>-->
+<!--                     <threadCountClasses>1</threadCountClasses>-->
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -83,77 +120,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.9</version>
-            </plugin>
         </plugins>
     </build>
-
-
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            <id>Parallel</id>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                        <version>2.20</version>-->
-<!--                        <configuration>-->
-<!--                            <argLine>-Xms512m -Xmx1024m</argLine>-->
-<!--                            <suiteXmlFiles>-->
-<!--                                <suiteXmlFile>storeTestsParallel.xml</suiteXmlFile>-->
-<!--                            </suiteXmlFiles>-->
-<!--                        </configuration>-->
-<!--                        <dependencies>-->
-<!--                            <dependency>-->
-<!--                                <groupId>org.aspectj</groupId>-->
-<!--                                <artifactId>aspectjweaver</artifactId>-->
-<!--                                <version>${aspectj.version}</version>-->
-<!--                            </dependency>-->
-<!--                        </dependencies>-->
-<!--                    </plugin>-->
-<!--                    <plugin>-->
-<!--                        <groupId>io.qameta.allure</groupId>-->
-<!--                        <artifactId>allure-maven</artifactId>-->
-<!--                        <version>2.9</version>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-
-<!--        <profile>-->
-<!--            <id>NotParallel</id>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                        <version>2.20</version>-->
-<!--                        <configuration>-->
-<!--                            <argLine>-Xms512m -Xmx1024m</argLine>-->
-<!--                            <suiteXmlFiles>-->
-<!--                                <suiteXmlFile>storeTestsNotParallel.xml</suiteXmlFile>-->
-<!--                            </suiteXmlFiles>-->
-<!--                        </configuration>-->
-<!--                        <dependencies>-->
-<!--                            <dependency>-->
-<!--                                <groupId>org.aspectj</groupId>-->
-<!--                                <artifactId>aspectjweaver</artifactId>-->
-<!--                                <version>${aspectj.version}</version>-->
-<!--                            </dependency>-->
-<!--                        </dependencies>-->
-<!--                    </plugin>-->
-<!--                    <plugin>-->
-<!--                        <groupId>io.qameta.allure</groupId>-->
-<!--                        <artifactId>allure-maven</artifactId>-->
-<!--                        <version>2.9</version>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-
 </project>

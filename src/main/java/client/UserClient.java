@@ -1,8 +1,11 @@
 package client;
 
+import builders.UserBuilder;
 import io.restassured.filter.log.LogDetail;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import model.User;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -56,5 +59,25 @@ public class UserClient extends BaseClient {
         return given(baseRequestSpecification())
                 .pathParam("username", userName)
                 .delete(DELETE_URL);
+    }
+
+    public User getUserFromResponseSendingRequestWithName(String userName) {
+        Response response = getUserByUsername(userName);
+        return getUserFromResponse(response);
+    }
+
+    private User getUserFromResponse(Response response) {
+        UserBuilder userBuilder = new UserBuilder();
+        JsonPath source = response.jsonPath();
+        userBuilder.setId(source.getInt("id"))
+                .setUserName(source.getString("username"))
+                .setFirstName(source.getString("firstName"))
+                .setLastName(source.getString("lastName"))
+                .setEmail(source.getString("email"))
+                .setPassword(source.getString("password"))
+                .setPhone(source.getString("phone"))
+                .setUserStatus(source.getInt("userStatus"));
+        return userBuilder.build();
+
     }
 }
