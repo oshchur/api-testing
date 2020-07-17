@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.Matchers.hasItem;
 
-public class GetInventory {
+public class GetInventoryTest {
 
     private Store store;
     StoreBuilder builder;

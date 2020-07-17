@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 
-public class DeleteOrder {
+public class DeleteOrderTest {
 
 
     private Store store;
