@@ -18,7 +18,6 @@ public class UserBuilder {
 
     public UserBuilder setId(int id) {
         this.id = id;
-
         return this;
     }
 

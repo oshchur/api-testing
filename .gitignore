@@ -28,3 +28,7 @@ api-testing.iml
 target/*
 libs/*
 allure-results/*
+
+#special for nikita
+MyTest.java
+MyTest.xml
