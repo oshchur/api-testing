@@ -26,7 +26,7 @@ public class UserClient extends BaseClient {
     }
 
     public Response getUserByUsername(final String username) {
-        return given(baseRequestSpecification(LogDetail.BODY))
+        return given(baseRequestSpecification())
                 .pathParam("username", username)
                 .get(GET_BY_USERNAME_URL);
     }
@@ -61,23 +61,4 @@ public class UserClient extends BaseClient {
                 .delete(DELETE_URL);
     }
 
-    public User getUserFromResponseSendingRequestWithName(String userName) {
-        Response response = getUserByUsername(userName);
-        return getUserFromResponse(response);
-    }
-
-    private User getUserFromResponse(Response response) {
-        UserBuilder userBuilder = new UserBuilder();
-        JsonPath source = response.jsonPath();
-        userBuilder.setId(source.getInt("id"))
-                .setUserName(source.getString("username"))
-                .setFirstName(source.getString("firstName"))
-                .setLastName(source.getString("lastName"))
-                .setEmail(source.getString("email"))
-                .setPassword(source.getString("password"))
-                .setPhone(source.getString("phone"))
-                .setUserStatus(source.getInt("userStatus"));
-        return userBuilder.build();
-
-    }
 }
