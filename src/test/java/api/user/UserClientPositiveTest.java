@@ -5,13 +5,16 @@ import assertion.UserAssertion;
 import builders.UserBuilder;
 import client.UserClient;
 import io.restassured.response.Response;
+import listeners.Listener;
 import model.User;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 import java.util.List;
 
+@Listeners(Listener.class)
 public class UserClientPositiveTest {
     UserClient userClient;
     UserBuilder userBuilder;
