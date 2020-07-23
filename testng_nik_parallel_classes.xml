@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
+    <listeners>
+        <listener class-name="listeners.Listener"></listener>
+        <listener class-name="listeners.Reporter"></listener>
+    </listeners>
     <test verbose="2" preserve-order="true"
           parallel="classes"
           name="positive and negative userClient tests">
         <classes>
             <class name="api.user.UserClientNegativeTest"></class>
-            <class name="api.user.UserClientDeleteNegativeTest"></class>
+            <class name="api.user.UserClientDeleteTest"></class>
+            <class name="api.user.UserClientCreateTest"></class>
+            <class name="api.user.UserClientTest"></class>
         </classes>
     </test>
 </suite>

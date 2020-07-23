@@ -7,7 +7,10 @@ import client.UserClient;
 import io.restassured.response.Response;
 import listeners.Listener;
 import model.User;
+import org.testng.ITestContext;
+import org.testng.TestRunner;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -15,10 +18,16 @@ import java.net.HttpURLConnection;
 import java.util.List;
 
 @Listeners(Listener.class)
-public class UserClientPositiveTest {
+public class UserClientTest {
     UserClient userClient;
     UserBuilder userBuilder;
     User expectedUser;
+
+    @BeforeSuite
+    public void suiteSettings(ITestContext context) {
+        TestRunner testRunner = (TestRunner) context;
+        ((TestRunner) context).setOutputDirectory("src/logs/ok/output.txt");
+    }
 
     @BeforeClass
     public void beforeClass() {
@@ -64,12 +73,6 @@ public class UserClientPositiveTest {
         BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 
-    @Test
-    public void createTest() {
-        User user = new UserBuilder().constructRandomInvalidUser();
-        Response response = userClient.create(user);
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
-    }
 
     @Test
     public void logoutTest() {
@@ -81,14 +84,6 @@ public class UserClientPositiveTest {
     public void loginTest() {
         User user = new UserBuilder().constructRandomValidUser();
         Response response = userClient.login(user.getUsername(), user.getPassword());
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
-    }
-
-    @Test
-    public void deleteTest() {
-        User user = new UserBuilder().constructRandomValidUser();
-        userClient.create(user);
-        Response response = userClient.delete(user.getUsername());
         BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
 

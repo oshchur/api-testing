@@ -21,7 +21,12 @@ public class Listener implements ITestListener {
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-        File file = new File("src\\logs\\" + iTestResult.getName() + ".txt");
+        File file;
+        if(System.getProperty("os.name").indexOf("win") >= 0) {
+            file = new File("src\\logs\\" + iTestResult.getName() + ".txt");
+        } else {
+            file = new File("src/logs/" + iTestResult.getName() + ".txt");
+        }
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
