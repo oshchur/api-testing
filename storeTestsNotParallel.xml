@@ -2,6 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="All Test Suite">
+    <listeners>
+        <listener class-name="utils.AnnotationTransformer"/>
+    </listeners>
     <test verbose="10" preserve-order="true" name="allStoreTests">
         <classes>
             <class name="api.storeTests.DeleteOrderTest"/>
