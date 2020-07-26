@@ -10,25 +10,25 @@ public class RetryAnalyzer implements IRetryAnalyzer {
     @Override
     public boolean retry(ITestResult result) {
 
-        if(counter < retryLimit)
-        {
-            counter++;
-            return true;
-        }
-        return false;
-
-//        if (!result.isSuccess()) {
-//            if (counter < retryLimit) {
-//                counter++;
-//                result.setStatus(ITestResult.FAILURE);
-//                return true;
-//            } else {
-//                result.setStatus(ITestResult.FAILURE);
-//            }
-//        } else {
-//            result.setStatus(ITestResult.SUCCESS);
+//        if(counter < retryLimit)
+//        {
+//            counter++;
+//            return true;
 //        }
 //        return false;
+
+        if (!result.isSuccess()) {
+            if (counter < retryLimit) {
+                counter++;
+                result.setStatus(ITestResult.FAILURE);
+                return true;
+            } else {
+                result.setStatus(ITestResult.FAILURE);
+            }
+        } else {
+            result.setStatus(ITestResult.SUCCESS);
+        }
+        return false;
     }
 
 
