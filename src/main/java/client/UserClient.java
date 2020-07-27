@@ -1,11 +1,8 @@
 package client;
 
-import builders.UserBuilder;
 import io.restassured.filter.log.LogDetail;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import model.User;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class UserClient extends BaseClient {
     private static final String LOGOUT_URL = USER_URL + "/logout";
 
     public Response createWithList(final List<User> users) {
-        return given(baseRequestSpecification(LogDetail.BODY))
+        return given(baseRequestSpecification())
                 .body(users)
                 .post(CREATE_WITH_USER_LIST_URL);
     }

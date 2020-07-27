@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="classes">
+    <listeners>
+        <listener class-name="listeners.Listener"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true"
+          parallel="classes"
+          name="positive and negative user tests">
+        <classes>
+            <class name="api.user.GetUserTests"></class>
+            <class name="api.user.DeleteUserTests"></class>
+            <class name="api.user.CreateUserTests"></class>
+            <class name="api.user.LoginUserTests"></class>
+        </classes>
+    </test>
+</suite>
