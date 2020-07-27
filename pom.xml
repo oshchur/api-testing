@@ -16,6 +16,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <parallelBy>classes</parallelBy>
         <threadCount>5</threadCount>
+        <usedefaultlisteners>false</usedefaultlisteners>
+        <listener>utils.AnnotationTransformer</listener>
     </properties>
 
     <dependencies>
@@ -101,14 +103,8 @@
                 <version>2.22.2</version>
                 <configuration>
                    <properties>
-                       <property>
-                           <name>usedefaultlisteners</name>
-                           <value>false</value>
-                       </property>
-                       <property>
-                           <name>listener</name>
-                           <value>utils.AnnotationTransformer</value>
-                       </property>
+                       <usedefaultlisteners>${usedefaultlisteners}</usedefaultlisteners>
+                       <listener>${listener}</listener>
                     </properties>
                     <parallel>${parallelBy}</parallel>
                     <threadCount>${threadCount}</threadCount>
