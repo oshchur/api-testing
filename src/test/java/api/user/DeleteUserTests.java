@@ -4,17 +4,20 @@ import assertion.BaseAssertion;
 import builders.UserBuilder;
 import client.UserClient;
 import io.restassured.response.Response;
+import listeners.Listener;
 import model.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.net.HttpURLConnection;
 import java.util.List;
 
-public class UserClientDeleteTest {
+@Listeners(Listener.class)
+public class DeleteUserTests {
     UserClient userClient;
     UserBuilder userBuilder;
 
@@ -23,6 +26,7 @@ public class UserClientDeleteTest {
         userClient = new UserClient();
         userBuilder = new UserBuilder();
     }
+
     @Test(dataProvider = "users")
     public void createAndThenDeleteUser(User user) {
         userClient.create(user);
@@ -40,7 +44,7 @@ public class UserClientDeleteTest {
     @Test(dataProvider = "arrOfUsers")
     public void createUsersFromArrayAndThenDeleteEach(List<User> users) {
         userClient.createWithList(users);
-        for(User user : users) {
+        for (User user : users) {
             Response response = userClient.delete(user.getUsername());
             BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
         }
@@ -49,12 +53,12 @@ public class UserClientDeleteTest {
     @DataProvider
     public Object[] arrOfUsers() {
         return new Object[]{
-            userBuilder.constructRandomListValidUsers(4)
+                userBuilder.constructRandomListValidUsers(4)
         };
     }
 
     @Test
-    public void deleteUnexistingUser() {
+    public void deleteUnExistingUser() {
         User user = userBuilder.constructRandomValidUser();
         Response response = userClient.delete(user.getUsername());
         Assert.assertEquals(response.getStatusCode(), HttpURLConnection.HTTP_NOT_FOUND);

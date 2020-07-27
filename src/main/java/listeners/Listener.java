@@ -4,39 +4,32 @@ import io.qameta.allure.Attachment;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class Listener implements ITestListener {
     private ByteArrayOutputStream response = new ByteArrayOutputStream();
     private PrintStream responseVar = new PrintStream(response, true);
+    Logger logger;
 
-    @Override
     public void onStart(ITestContext context) {
-        RestAssured.filters(new ResponseLoggingFilter(LogDetail.ALL, responseVar));
+        RestAssured.filters(new ResponseLoggingFilter(LogDetail.BODY, responseVar));
+        logger = LoggerFactory.getLogger(context.getName());
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-        File file;
-        if(System.getProperty("os.name").indexOf("win") >= 0) {
-            file = new File("src\\logs\\" + iTestResult.getName() + ".txt");
-        } else {
-            file = new File("src/logs/" + iTestResult.getName() + ".txt");
-        }
+        String testName = "thread_" + Thread.currentThread().getId() + "_" + iTestResult.getName() + iTestResult.getStartMillis();
+        MDC.put("testName", testName);
 
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            response.writeTo(fileOutputStream);
-            response.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        logResponse(file);
+        logger.debug(iTestResult.getName() + ":\n" + response.toString());
+        attachLogResponse(response);
     }
 
     public void onTestFailure(ITestResult iTestResult) {
@@ -44,15 +37,10 @@ public class Listener implements ITestListener {
     }
 
     @Attachment(value = "response", type = "text/plain")
-    public byte[] logResponse(File file) {
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
+    public byte[] attachLogResponse(ByteArrayOutputStream stream) {
+        byte[] bytes = stream.toByteArray();
+        stream.reset();
 
-            return bytes;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new byte[0];
+        return bytes;
     }
 }

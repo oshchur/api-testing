@@ -7,27 +7,18 @@ import client.UserClient;
 import io.restassured.response.Response;
 import listeners.Listener;
 import model.User;
-import org.testng.ITestContext;
-import org.testng.TestRunner;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
-import java.util.List;
 
 @Listeners(Listener.class)
-public class UserClientTest {
+public class GetUserTests {
     UserClient userClient;
     UserBuilder userBuilder;
     User expectedUser;
-
-    @BeforeSuite
-    public void suiteSettings(ITestContext context) {
-        TestRunner testRunner = (TestRunner) context;
-        ((TestRunner) context).setOutputDirectory("src/logs/ok/output.txt");
-    }
 
     @BeforeClass
     public void beforeClass() {
@@ -44,12 +35,26 @@ public class UserClientTest {
                 .build();
     }
 
-    @Test
-    public void createWithList() {
-        final List<User> randomUsers = userBuilder.constructRandomListValidUsers(3);
-        final Response response = userClient.createWithList(randomUsers);
+    @Test(dataProvider = "getInvalidUsernames")
+    public void getUserByInvalidUsername(final String username) {
+        final Response response = userClient.getUserByUsername(username);
+        final User user = response.as(User.class);
 
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
+        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_NOT_FOUND);
+        UserAssertion.checkInvalidUser(user);
+    }
+
+    @DataProvider
+    private Object[] getInvalidUsernames() {
+        return new Object[]{
+                "Tarantino",
+                "5656",
+                " ",
+                "флдж",
+                "*/!@##!@%$!",
+                "4322___vfdjkqWW",
+                "     ",
+                "  asd221342 4 324 ",};
     }
 
     @Test
@@ -62,29 +67,4 @@ public class UserClientTest {
         BaseAssertion.checkResponse(getUserByUsernameResponse, HttpURLConnection.HTTP_OK);
         UserAssertion.checkValidUser(user, expectedUser);
     }
-
-    @Test
-    public void updateUserByUsername() {
-        final User user = userClient.getUserByUsername("Malina").as(User.class);
-        user.setLastName("Malynovskyi");
-
-        Response response = userClient.updateByUsername("Malina", user);
-
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
-    }
-
-
-    @Test
-    public void logoutTest() {
-        Response response = userClient.logout();
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
-    }
-
-    @Test
-    public void loginTest() {
-        User user = new UserBuilder().constructRandomValidUser();
-        Response response = userClient.login(user.getUsername(), user.getPassword());
-        BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
-    }
-
 }
