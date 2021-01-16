@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 
-@Listeners(Listener.class)
 public class GetUserTests {
     UserClient userClient;
     UserBuilder userBuilder;

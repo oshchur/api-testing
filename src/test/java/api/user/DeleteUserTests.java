@@ -16,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 import java.net.HttpURLConnection;
 import java.util.List;
 
-@Listeners(Listener.class)
 public class DeleteUserTests {
     UserClient userClient;
     UserBuilder userBuilder;
