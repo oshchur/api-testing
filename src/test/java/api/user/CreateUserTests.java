@@ -13,11 +13,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-@Listeners(Listener.class)
 public class CreateUserTests {
     UserClient userClient;
     UserBuilder userBuilder;
@@ -31,6 +31,7 @@ public class CreateUserTests {
     @Test
     public void createTest() {
         User user = new UserBuilder().constructRandomInvalidUser();
+        System.out.println(user.toString());
         Response response = userClient.create(user);
         BaseAssertion.checkResponse(response, HttpURLConnection.HTTP_OK);
     }
@@ -63,7 +64,7 @@ public class CreateUserTests {
                 .constructRandomListValidUsers(4)
                 .toArray();
     }
-
+    
     @Test(dataProvider = "getCreatingUsers")
     public void createUserGetHimAndCheck(User user) {
         userClient.create(user);

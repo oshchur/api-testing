@@ -21,14 +21,16 @@ public class Listener implements ITestListener {
 
     public void onStart(ITestContext context) {
         RestAssured.filters(new ResponseLoggingFilter(LogDetail.BODY, responseVar));
-        logger = LoggerFactory.getLogger(context.getName());
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
+        logger = LoggerFactory.getLogger(iTestResult.getName());
+
         String testName = "thread_" + Thread.currentThread().getId() + "_" + iTestResult.getName() + iTestResult.getStartMillis();
         MDC.put("testName", testName);
 
         logger.debug(iTestResult.getName() + ":\n" + response.toString());
+
         attachLogResponse(response);
     }
 
@@ -39,8 +41,11 @@ public class Listener implements ITestListener {
     @Attachment(value = "response", type = "text/plain")
     public byte[] attachLogResponse(ByteArrayOutputStream stream) {
         byte[] bytes = stream.toByteArray();
+
         stream.reset();
 
         return bytes;
     }
+
+
 }
